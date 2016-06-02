@@ -17,7 +17,7 @@ import org.freedesktop.wallpapers.WallpaperService;
  * Default implementations of an {@link WallpaperService}.
  */
 
-public class DefaultDesktopEntryService extends AbstractFreedesktopService<DesktopEntry> {
+public class DefaultDesktopEntryService extends AbstractFreedesktopService<DesktopEntry> implements DesktopEntryService {
 
 	protected Collection<DesktopEntry> scanBase(FileObject base) throws IOException {
 		List<DesktopEntry> entries = new ArrayList<DesktopEntry>();

@@ -11,11 +11,11 @@ import org.freedesktop.util.INIFile;
 
 public class CursorTheme extends AbstractTheme {
 
-	private static final String ICON_THEME = "Icon Theme";
+	private static final String CURSOR_THEME = "Cursor Theme";
 	private FileObject themeFile;
 
 	public CursorTheme(FileObject base) throws IOException, ParseException {
-		super(base, ICON_THEME);
+		super(CURSOR_THEME, base);
 		themeFile = base.resolveFile("index.theme");
 		if (!themeFile.exists()) {
 			throw new FileNotFoundException("index.theme not found");

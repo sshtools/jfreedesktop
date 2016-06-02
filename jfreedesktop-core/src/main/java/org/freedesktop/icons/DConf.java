@@ -30,7 +30,6 @@ public class DConf {
 
 		private Entry(String name, String line) {
 			this.name = name;
-
 			if (line.startsWith("'") && line.endsWith("'")) {
 				type = String.class;
 				values.add(line.substring(1, line.length() - 1));
@@ -38,6 +37,14 @@ public class DConf {
 			} else if (line.equals("")) {
 				type = Object.class;
 				exists = true;
+			} else if(line.equals("true") || line.equals("false")) {
+				type = Boolean.class;
+				exists = true;
+				values.add(Boolean.valueOf(line));
+			}  else if(line.startsWith("uint32 ")) {
+				type = Integer.class;
+				exists = true;
+				values.add(Integer.parseInt(line.substring(7)));
 			} else if (line.startsWith("[") && line.endsWith("]")) {
 				String[] a = line.substring(1, line.length() - 1).split(",");
 				for (String s : a) {

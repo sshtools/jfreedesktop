@@ -260,23 +260,23 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 			return filename;
 		}
 
-		Collection<String> parents = null;
+		Collection<String> parents = new ArrayList<String>();
 		if (theme.isParents()) {
-			parents = theme.getParents();
-		} else if (!theme.getInternalName().equals(HICOLOR)) {
-			parents = Arrays.asList(new String[] { HICOLOR });
+			parents.addAll(theme.getParents());
+		} 
+		
+		if (!theme.getInternalName().equals(HICOLOR) && !parents.contains(HICOLOR)) {
+			parents.add(HICOLOR);
 		}
 
-		if (parents != null) {
-			for (String parent : parents) {
-				IconTheme parentTheme = getEntity(parent);
-				if (parentTheme == null) {
-					Log.debug("Parent theme " + parent + " specified in " + theme.getInternalName() + " does not exist.");
-				} else {
-					filename = findIconHelper(icon, size, parentTheme);
-					if (filename != null) {
-						return filename;
-					}
+		for (String parent : parents) {
+			IconTheme parentTheme = getEntity(parent);
+			if (parentTheme == null) {
+				Log.debug("Parent theme " + parent + " specified in " + theme.getInternalName() + " does not exist.");
+			} else {
+				filename = findIconHelper(icon, size, parentTheme);
+				if (filename != null) {
+					return filename;
 				}
 			}
 		}

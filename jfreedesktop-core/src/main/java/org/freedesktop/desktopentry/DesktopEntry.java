@@ -11,6 +11,7 @@ import java.util.Properties;
 import org.apache.commons.vfs2.FileObject;
 import org.freedesktop.AbstractFreedesktopEntity;
 import org.freedesktop.util.INIFile;
+import org.freedesktop.util.Log;
 import org.freedesktop.util.Util;
 
 /**
@@ -83,8 +84,8 @@ public class DesktopEntry extends AbstractFreedesktopEntity {
 	private boolean startupNotify;
 	private String startupWMClass;
 
-	public DesktopEntry(FileObject base) throws IOException, ParseException {
-		super(base, DESKTOP_ENTRY);
+	public DesktopEntry(FileObject... base) throws IOException, ParseException {
+		super(DESKTOP_ENTRY, base);
 	}
 
 	/**
@@ -444,8 +445,9 @@ public class DesktopEntry extends AbstractFreedesktopEntity {
 		}
 		version = properties.getProperty(VERSION, "pre-standard").trim();
 		encoding = properties.getProperty(ENCODING, "").trim();
-		if (!encoding.equalsIgnoreCase("utf-8") && !encoding.equals("legacy-mixed")) {
-			throw new ParseException("Encoding field is invalid.", 0);
+		if (!encoding.equals("") && !encoding.equalsIgnoreCase("utf-8") && !encoding.equals("legacy-mixed")) {
+			Log.warn(String.format("Invalid encoding, %s, defaulting to UTF-8", encoding));
+			encoding = "UTF-8";
 		}
 		noDisplay = "true".equalsIgnoreCase(Util.emptyOrTrimmed(properties.getProperty(NO_DISPLAY)));
 		hidden = "true".equalsIgnoreCase(Util.emptyOrTrimmed(properties.getProperty(HIDDEN)));
@@ -482,6 +484,6 @@ public class DesktopEntry extends AbstractFreedesktopEntity {
 
 	@Override
 	protected void load() throws IOException, ParseException {
-		load(getBase());
+		load(getBases().iterator().next());
 	}
 }

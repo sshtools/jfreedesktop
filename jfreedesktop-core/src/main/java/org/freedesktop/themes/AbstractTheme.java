@@ -14,8 +14,8 @@ public abstract class AbstractTheme extends AbstractFreedesktopEntity implements
 
     protected String example;
 
-    public AbstractTheme(FileObject base, String themeTypeName) throws IOException {
-        super(base, themeTypeName);
+    public AbstractTheme(String themeTypeName, FileObject... base) throws IOException {
+        super(themeTypeName, base);
     }
 
     public String getExample() {

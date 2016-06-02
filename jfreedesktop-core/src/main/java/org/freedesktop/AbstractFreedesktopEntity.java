@@ -3,6 +3,9 @@ package org.freedesktop;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -17,13 +20,13 @@ public abstract class AbstractFreedesktopEntity implements FreedesktopResource {
 
 	protected String example;
 
-	private FileObject base;
+	private List<FileObject> bases = new ArrayList<FileObject>();
 	private Properties entityProperties;
 	private String internalName;
 	private String entityTypeName;
 	private boolean loaded;
 
-	public AbstractFreedesktopEntity(FileObject base, String entityTypeName) {
+	public AbstractFreedesktopEntity(String entityTypeName, FileObject... base) {
 		this.entityTypeName = entityTypeName;
 		init(base);
 	}
@@ -91,13 +94,22 @@ public abstract class AbstractFreedesktopEntity implements FreedesktopResource {
 
 	protected abstract void initFromProperties(INIFile iniFile, Properties properties) throws IOException, ParseException;
 
+	public List<FileObject> getBases() {
+		return bases;
+	}
+
 	public FileObject getBase() {
-		return base;
+		return bases.get(0);
 	}
 
 	protected String getLocalisableField(String key, String language) {
 		checkLoaded();
 		String name = null;
+		if(entityProperties == null) {
+			// Failed to load
+			Log.warn("No entity properties!");
+			return key;
+		}
 		if (language != null) {
 			name = entityProperties.getProperty(key + "[" + language + "]");
 		}
@@ -107,9 +119,20 @@ public abstract class AbstractFreedesktopEntity implements FreedesktopResource {
 		return name;
 	}
 
-	protected void init(FileObject base) {
-		this.base = base;
-		internalName = base.getName().getBaseName();
+	protected void init(FileObject... bases) {
+		if(bases.length == 0)
+			throw new IllegalArgumentException("Entity must have at least one base.");
+		this.bases.addAll(Arrays.asList(bases));
+		String base = null;
+		for(FileObject s : bases) {
+			if(base == null) {
+				base = s.getName().getBaseName();
+			}
+			else if(!base.equals(s.getName().getBaseName())) {
+				throw new IllegalArgumentException("All bases must have the same filename.");				
+			}
+		}
+		internalName = base;
 	}
 
 	public String toString() {
@@ -121,9 +144,9 @@ public abstract class AbstractFreedesktopEntity implements FreedesktopResource {
 			try {
 				load();
 			} catch (IOException e) {
-				Log.warn("Failed to load theme.", e);
+				Log.warn("Failed to load entity.", e);
 			} catch (ParseException e) {
-				Log.warn("Failed to parse theme.", e);
+				Log.warn("Failed to parse entity.", e);
 			}
 		}
 	}

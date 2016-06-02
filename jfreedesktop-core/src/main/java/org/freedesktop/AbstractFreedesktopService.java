@@ -100,7 +100,7 @@ public abstract class AbstractFreedesktopService<T extends FreedesktopEntity> im
 		public boolean includeFile(FileSelectInfo info) throws Exception {
 			return info.getFile().getType().equals(FileType.FOLDER) && !info.getFile().equals(info.getBaseFolder());
 		}
-
+       
 		public boolean traverseDescendents(FileSelectInfo info) throws Exception {
 			return info.getDepth() == 0;
 		}

@@ -20,6 +20,8 @@ public class LinuxIconService extends DefaultIconService {
 	public LinuxIconService() throws IOException, ParseException {
 		super();
 		checkAndAddBase(new File(System.getProperty("user.home")
+				+ File.separator + ".local"+ File.separator + "share"+ File.separator + "icons"));
+		checkAndAddBase(new File(System.getProperty("user.home")
 				+ File.separator + ".icons"));
 		checkAndAddBase(new File("/usr/share/icons"));
 	}

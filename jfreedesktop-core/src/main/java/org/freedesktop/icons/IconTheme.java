@@ -26,10 +26,16 @@ public class IconTheme extends AbstractTheme {
 	private List<Directory> directories;
 	private FileObject themeFile;
 
-	public IconTheme(FileObject base) throws IOException {
-		super(base, ICON_THEME);
-		themeFile = getBase().resolveFile("index.theme");
-		if (!themeFile.exists()) {
+	public IconTheme(FileObject... base) throws IOException {
+		super(ICON_THEME, base);
+		for (FileObject b : base) {
+			FileObject f = b.resolveFile("index.theme");
+			if (f.exists()) {
+				themeFile = f;
+				break;
+			}
+		}
+		if (themeFile == null) {
 			throw new FileNotFoundException();
 		}
 	}
@@ -39,7 +45,8 @@ public class IconTheme extends AbstractTheme {
 		return hidden;
 	}
 
-	public void initFromThemeProperties(INIFile iniFile, Properties themeProperties) throws IOException, ParseException {
+	public void initFromThemeProperties(INIFile iniFile, Properties themeProperties)
+			throws IOException, ParseException {
 		inherits = new ArrayList<String>();
 		directories = new ArrayList<Directory>();
 
@@ -60,8 +67,8 @@ public class IconTheme extends AbstractTheme {
 				String directoryName = t.nextToken();
 				Properties directoryProperties = iniFile.get(directoryName);
 				if (directoryProperties == null) {
-					throw new ParseException("Entry '" + directoryName + "' in Directories does not have a corresponding section.",
-						0);
+					throw new ParseException(
+							"Entry '" + directoryName + "' in Directories does not have a corresponding section.", 0);
 				}
 				directories.add(new Directory(this, directoryName, directoryProperties));
 			}
@@ -101,15 +108,17 @@ public class IconTheme extends AbstractTheme {
 		FileObject firstFile = null;
 		for (Directory directory : getDirectories()) {
 			for (String ext : DefaultIconService.SUPPORTED_EXTENSIONS) {
-				FileObject file = getBase().resolveFile(directory.getKey() + File.separator + icon + "." + ext);
-				int directorySizeDistance = directorySizeDistance(directory, size);
-				if (file.exists()) {
-					if (directorySizeDistance < minimalSize) {
-						closestFile = file;
-						minimalSize = directorySizeDistance;
-					} else {
-						if (firstFile == null) {
-							firstFile = file;
+				for (FileObject base : getBases()) {
+					FileObject file = base.resolveFile(directory.getKey() + File.separator + icon + "." + ext);
+					int directorySizeDistance = directorySizeDistance(directory, size);
+					if (file.exists()) {
+						if (directorySizeDistance < minimalSize) {
+							closestFile = file;
+							minimalSize = directorySizeDistance;
+						} else {
+							if (firstFile == null) {
+								firstFile = file;
+							}
 						}
 					}
 				}

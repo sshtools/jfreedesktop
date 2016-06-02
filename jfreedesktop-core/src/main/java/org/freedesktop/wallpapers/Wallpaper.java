@@ -1,5 +1,6 @@
 package org.freedesktop.wallpapers;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Properties;
@@ -27,14 +28,23 @@ public class Wallpaper extends AbstractTheme {
 		return author;
 	}
 
-	public Wallpaper(FileObject base) throws IOException, ParseException {
-		super(base, WALLPAPER);
-		themeFile = base.getParent().resolveFile(base.getName() + ".desktop");
+	public Wallpaper(FileObject... base) throws IOException, ParseException {
+		super(WALLPAPER, base);
+		for (FileObject b : base) {
+			FileObject f = b.getParent().resolveFile(b.getName() + ".desktop");
+			if (f.exists()) {
+				themeFile = f;
+				break;
+			}
+		}
+		if (themeFile == null) {
+			throw new FileNotFoundException();
+		}
 	}
 
 	public void initFromThemeProperties(INIFile iniFile, Properties themeProperties) throws ParseException {
 		String file = themeProperties.getProperty(FILE);
-		if (!file.equals(getBase().getName())) {
+		if (!file.equals(getBases().iterator().next().getName())) {
 			throw new ParseException("Unexpected file " + file, 0);
 		}
 		imageType = themeProperties.getProperty(IMAGE_TYPE);

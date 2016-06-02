@@ -67,18 +67,20 @@ public class Directory {
 
 		}
 
-		FileObject dirBase = theme.getBase().resolveFile(getKey());
-		// Loop over the supported extensions so we get files in supported
-		// extension order
-		for (String extension : DefaultIconService.SUPPORTED_EXTENSIONS) {
-			FileObject[] files = dirBase.findFiles(new ExtensionSelector(extension));
-			if (files != null) {
-				for (FileObject file : files) {
-					String name = file.getName().getBaseName();
-					int lidx = name.lastIndexOf('.');
-					String basename = name.substring(0, lidx);
-					if (!cache.containsKey(basename)) {
-						cache.put(basename, file);
+		for (FileObject base : theme.getBases()) {
+			FileObject dirBase = base.resolveFile(getKey());
+			// Loop over the supported extensions so we get files in supported
+			// extension order
+			for (String extension : DefaultIconService.SUPPORTED_EXTENSIONS) {
+				FileObject[] files = dirBase.findFiles(new ExtensionSelector(extension));
+				if (files != null) {
+					for (FileObject file : files) {
+						String name = file.getName().getBaseName();
+						int lidx = name.lastIndexOf('.');
+						String basename = name.substring(0, lidx);
+						if (!cache.containsKey(basename)) {
+							cache.put(basename, file);
+						}
 					}
 				}
 			}
@@ -128,6 +130,12 @@ public class Directory {
 
 	public FileObject findIcon(String icon) {
 		return cache.get(icon);
+	}
+
+	@Override
+	public String toString() {
+		return "Directory [size=" + size + ", type=" + type + ", maxSize=" + maxSize + ", minSize=" + minSize + ", key="
+				+ key + ", threshold=" + threshold + "]";
 	}
 
 }
