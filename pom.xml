@@ -134,13 +134,13 @@
 								<goal>jar</goal>
 							</goals>
 							<configuration>
+								<additionalparam>-Xdoclint:none</additionalparam>
 								<!-- switch on dependency-driven aggregation -->
 								<includeDependencySources>false</includeDependencySources>
 								<dependencySourceIncludes>
 									<!-- include ONLY dependencies I control -->
 									<dependencySourceInclude>com.sshtools:*</dependencySourceInclude>
 								</dependencySourceIncludes>
-								<additionalparam>-Xdoclint:none</additionalparam>
 							</configuration>
 						</execution>
 					</executions>
