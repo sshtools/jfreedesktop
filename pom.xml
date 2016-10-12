@@ -29,7 +29,7 @@
 	<version>2.1.1</version>
 	<name>JFreeDesktop</name>
 	<description>Implements a select few freedesktop.org standard in Java.</description>
-	<url>http://www.sshtools.com</url>
+	<url>https://github.com/sshtools/jfreedesktop</url>
 	<packaging>pom</packaging>
 
 	<distributionManagement>
@@ -130,7 +130,7 @@
 					<executions>
 						<execution>
 							<id>javadoc-jar</id>
-							<phase>package</phase>
+							<phase>attach-javadocs</phase>
 							<goals>
 								<goal>jar</goal>
 							</goals>
