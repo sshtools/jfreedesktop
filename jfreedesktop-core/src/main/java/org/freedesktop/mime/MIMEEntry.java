@@ -29,8 +29,8 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class MIMEEntry extends DefaultHandler implements FreedesktopResource {
 
-	private final static List<String> streamable = Arrays.asList(new String[] { "application", "audio", "image", "message",
-		"model", "multipart", "video", "x-content", "x-epoc" });
+	private final static List<String> streamable = Arrays.asList(new String[] { "application", "audio", "image",
+			"message", "model", "multipart", "video", "x-content", "x-epoc" });
 
 	private String name;
 	private java.util.List<AliasEntry> aliases;
@@ -71,7 +71,8 @@ public class MIMEEntry extends DefaultHandler implements FreedesktopResource {
 	 * that are implicitly subclasses of application/octet-stream. Streamable
 	 * types must be configured before the directory is scanned.
 	 * 
-	 * @param mimeType type to add
+	 * @param mimeType
+	 *            type to add
 	 */
 	public static void addStreamableType(String mimeType) {
 		streamable.add(mimeType);
@@ -82,7 +83,8 @@ public class MIMEEntry extends DefaultHandler implements FreedesktopResource {
 	 * those that are implicitly subclasses of application/octet-stream.
 	 * Streamable types must be configured before the directory is scanned.
 	 * 
-	 * @param mimeType type to remove
+	 * @param mimeType
+	 *            type to remove
 	 */
 	public static void removeStreamableType(String mimeType) {
 		streamable.remove(mimeType);
@@ -181,8 +183,12 @@ public class MIMEEntry extends DefaultHandler implements FreedesktopResource {
 		Element root = document.getDocumentElement();
 		String typeValue = root.getAttribute("type");
 		if (!name.equals(typeValue)) {
-			throw new IOException("Root elements type attribute ('" + typeValue
-				+ "') oes not match MIME type determined by filename ('" + name + "').");
+			if (name.equalsIgnoreCase(typeValue)) {
+				typeValue = name;
+			} else {
+				throw new IOException("Root elements type attribute ('" + typeValue
+						+ "') does not match MIME type determined by filename ('" + name + "').");
+			}
 		}
 
 		NodeList children = document.getElementsByTagName("icon");
@@ -280,11 +286,9 @@ public class MIMEEntry extends DefaultHandler implements FreedesktopResource {
 
 	@Override
 	public String toString() {
-		return "MIMEEntry [name=" + name + ", aliases=" + aliases
-				+ ", comments=" + comments + ", subclasses=" + subclasses
-				+ ", acronyms=" + acronyms + ", expandedAcronyms="
-				+ expandedAcronyms + ", icon=" + icon + ", genericIcon="
-				+ genericIcon + ", family=" + family + ", type=" + type + "]";
+		return "MIMEEntry [name=" + name + ", aliases=" + aliases + ", comments=" + comments + ", subclasses="
+				+ subclasses + ", acronyms=" + acronyms + ", expandedAcronyms=" + expandedAcronyms + ", icon=" + icon
+				+ ", genericIcon=" + genericIcon + ", family=" + family + ", type=" + type + "]";
 	}
 
 }
