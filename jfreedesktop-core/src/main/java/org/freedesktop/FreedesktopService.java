@@ -1,6 +1,5 @@
 package org.freedesktop;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
@@ -26,7 +25,7 @@ public interface FreedesktopService<T extends FreedesktopEntity> {
      * Remove a directory from the list that is is searched.
      * 
      * @param base base directory to remove from the list that is searched
-     * @see #addBase(File)
+     * @see #addBase(FileObject)
      */
     void removeBase(FileObject base);
 

@@ -7,29 +7,28 @@ import java.util.List;
 import org.freedesktop.FreedesktopEntity;
 
 /**
- * Represents a single <i>glob</i> as described in the <a
- * http://standards.freedesktop.org/shared-mime-info-spec/shared-mime-info-spec-latest.html">Shared
+ * Represents a single <strong>glob</strong> as described in the <a href=
+ * "http://standards.freedesktop.org/shared-mime-info-spec/shared-mime-info-spec-latest.html">Shared
  * MIME-info Database Specification</a>
  */
 public class GlobEntry implements FreedesktopEntity {
+	private String name;
+	private List<String> patterns;
 
-    private String name;
-    private List<String> patterns;
+	public GlobEntry(String name) {
+		this.name = name;
+		patterns = new ArrayList<String>();
+	}
 
-    public GlobEntry(String name) {
-        this.name = name;
-        patterns=  new ArrayList<String>();
-    }
-    
-    public void addPattern(String pattern) {
-        patterns.add(pattern);
-    }
+	public void addPattern(String pattern) {
+		patterns.add(pattern);
+	}
 
-    public Collection<String> getPatterns() {
-        return patterns;
-    }
+	public Collection<String> getPatterns() {
+		return patterns;
+	}
 
-    public String getInternalName() {
-        return name;
-    }
+	public String getInternalName() {
+		return name;
+	}
 }
