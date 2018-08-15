@@ -204,7 +204,7 @@ public class DesktopEntry extends AbstractFreedesktopEntity {
 	 * existing files (e.g. due to a renaming) - by letting make install install
 	 * a file with Hidden=true in it.
 	 * 
-	 * @return
+	 * @return hidden
 	 */
 	public boolean isHidden() {
 		checkLoaded();
@@ -335,6 +335,8 @@ public class DesktopEntry extends AbstractFreedesktopEntity {
 	/**
 	 * Get the device to mount. Will either return a non-empty string or
 	 * <code>null</code> if the entry was not specified.
+	 * 
+	 * @return device to mount
 	 */
 	public String getDev() {
 		checkLoaded();

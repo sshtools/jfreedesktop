@@ -32,8 +32,7 @@ import org.freedesktop.util.Log;
  * supported. PNG, GIF, XPM and SVG.
  * <p>
  * Icon locations are also cached in memory, keyed on
- * [iconName]_[preferredSize]. Use {@link #clearCache()} to remove all cached
- * locations.
+ * [iconName]_[preferredSize]. 
  */
 public class DefaultCursorService extends AbstractThemeService<CursorTheme> implements CursorService {
 

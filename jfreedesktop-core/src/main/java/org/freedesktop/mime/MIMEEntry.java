@@ -37,16 +37,13 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * Represents a single <i>alias</i> as described in the <a
- * http://standards.freedesktop
- * .org/shared-mime-info-spec/shared-mime-info-spec-latest.html">Shared
+ * Represents a single <i>alias</i> as described in the <a href=
+ * "http://standards.freedesktop.org/shared-mime-info-spec/shared-mime-info-spec-latest.html">Shared
  * MIME-info Database Specification</a>
  */
 public class MIMEEntry extends DefaultHandler implements FreedesktopResource {
-
-	private final static List<String> streamable = Arrays.asList(new String[] { "application", "audio", "image", "message",
-		"model", "multipart", "video", "x-content", "x-epoc" });
-
+	private final static List<String> streamable = Arrays.asList(
+			new String[] { "application", "audio", "image", "message", "model", "multipart", "video", "x-content", "x-epoc" });
 	private String name;
 	private java.util.List<AliasEntry> aliases;
 	private Properties comments;
@@ -63,16 +60,13 @@ public class MIMEEntry extends DefaultHandler implements FreedesktopResource {
 		this.type = type;
 		this.name = family + "/" + type;
 		this.icon = icon == null ? this.name.replace('/', '-') : icon;
-
 		acronyms = new ArrayList<String>();
 		expandedAcronyms = new ArrayList<String>();
 		aliases = new ArrayList<AliasEntry>();
 		subclasses = new ArrayList<String>();
 		comments = new Properties();
 		genericIcon = family + "-x-generic";
-
 		load(file);
-
 		// Some types are implicity subclasses
 		if (family.equals("text")) {
 			subclasses.add("text/plain");
@@ -185,7 +179,6 @@ public class MIMEEntry extends DefaultHandler implements FreedesktopResource {
 			ioe.initCause(e);
 			throw ioe;
 		}
-
 	}
 
 	void build(Document document) throws IOException {
@@ -196,10 +189,13 @@ public class MIMEEntry extends DefaultHandler implements FreedesktopResource {
 		Element root = document.getDocumentElement();
 		String typeValue = root.getAttribute("type");
 		if (!name.equals(typeValue)) {
-			throw new IOException("Root elements type attribute ('" + typeValue
-				+ "') oes not match MIME type determined by filename ('" + name + "').");
+			if (name.equalsIgnoreCase(typeValue)) {
+				typeValue = name;
+			} else {
+				throw new IOException("Root elements type attribute ('" + typeValue
+						+ "') does not match MIME type determined by filename ('" + name + "').");
+			}
 		}
-
 		NodeList children = document.getElementsByTagName("icon");
 		buildIcon(children);
 		children = document.getElementsByTagName("generic-icon");
@@ -214,7 +210,6 @@ public class MIMEEntry extends DefaultHandler implements FreedesktopResource {
 		buildAcronym(children);
 		children = document.getElementsByTagName("expanded-acronym");
 		buildExpandedAcronym(children);
-
 	}
 
 	void buildAcronym(NodeList children) {
@@ -295,11 +290,8 @@ public class MIMEEntry extends DefaultHandler implements FreedesktopResource {
 
 	@Override
 	public String toString() {
-		return "MIMEEntry [name=" + name + ", aliases=" + aliases
-				+ ", comments=" + comments + ", subclasses=" + subclasses
-				+ ", acronyms=" + acronyms + ", expandedAcronyms="
-				+ expandedAcronyms + ", icon=" + icon + ", genericIcon="
+		return "MIMEEntry [name=" + name + ", aliases=" + aliases + ", comments=" + comments + ", subclasses=" + subclasses
+				+ ", acronyms=" + acronyms + ", expandedAcronyms=" + expandedAcronyms + ", icon=" + icon + ", genericIcon="
 				+ genericIcon + ", family=" + family + ", type=" + type + "]";
 	}
-
 }

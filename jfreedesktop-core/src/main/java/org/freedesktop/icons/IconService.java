@@ -15,7 +15,6 @@
  */
 package org.freedesktop.icons;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 
@@ -24,17 +23,17 @@ import org.freedesktop.themes.ThemeService;
 
 /**
  * Implementations of this service interface provide an easy way for Java to use
- * the <a href="http://www.freedesktop.org/wiki/">freedesktop.org</a>'s <i><a
- * href=
- * "http://standards.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html"
- * >Icon Theme Specification</i></a>.
+ * the Freedesktop <a href=
+ * "http://standards.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html">Icon
+ * Theme Specification</a>
  * <p>
  * To use the API, you must add (in the order that the locations should be
- * searched) at lease one <i>Base</i> directory using the {@link #addBase(File)}
- * method.
+ * searched) at lease one <i>Base</i> directory using the
+ * {@link #addBase(FileObject)} method.
  * <p>
- * You should also select a theme using {@link #setSelectedTheme(IconTheme)}. If
- * no theme is selected, the first theme found is used.
+ * You should also select a theme using
+ * {@link ThemeService#setSelectedTheme(org.freedesktop.themes.Theme)}. If no theme is selected,
+ * the first theme found is used.
  * <p>
  * To find an icon file, use {@link #findIcon(String, int)}. Only supply the
  * filename without the prefix (for example, <i>user-home</i>, not
@@ -61,7 +60,6 @@ import org.freedesktop.themes.ThemeService;
  * search algorithm.
  */
 public interface IconService extends ThemeService<IconTheme> {
-
 	/**
 	 * Must be called after construction to set the initial theme.
 	 */
@@ -76,7 +74,7 @@ public interface IconService extends ThemeService<IconTheme> {
 	 * @param name name of icon
 	 * @param size closest pixel size
 	 * @return file icon file
-	 * @throws IOException
+	 * @throws IOException on I/O error
 	 */
 	FileObject findIcon(String name, int size) throws IOException;
 
@@ -87,7 +85,7 @@ public interface IconService extends ThemeService<IconTheme> {
 	 * @param name name of icon
 	 * @param size closest pixel size
 	 * @return file or <code>null</code> if no icon can be found
-	 * @throws IOException
+	 * @throws IOException on I/O error
 	 */
 	boolean isIconExists(String name, int size) throws IOException;
 
@@ -96,7 +94,7 @@ public interface IconService extends ThemeService<IconTheme> {
 	 * matches is found. If <code>true</code> and this image isn't found, an
 	 * {@link IOException} will be thrown.
 	 * 
-	 * @param returnMissingImage return <i>Missing</i> image
+	 * @param b return <i>Missing</i> image
 	 */
 	void setReturnMissingImage(boolean b);
 
@@ -111,11 +109,9 @@ public interface IconService extends ThemeService<IconTheme> {
 
 	/**
 	 * Iterator over all the available icon names in the currently selected
-	 * theme for a given size.
+	 * theme.
 	 * 
-	 * @param size preferred size
 	 * @return icon iterator
 	 */
 	Iterator<String> iconNames();
-
 }

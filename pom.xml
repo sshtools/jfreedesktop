@@ -26,7 +26,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.sshtools</groupId>
 	<artifactId>jfreedesktop</artifactId>
-	<version>2.1.1</version>
+	<version>2.1.2</version>
 	<name>JFreeDesktop</name>
 	<description>Implements a select few freedesktop.org standard in Java.</description>
 	<url>https://github.com/sshtools/jfreedesktop</url>
