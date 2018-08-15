@@ -41,9 +41,9 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.kitfox.svg</groupId>
+			<groupId>com.metsci.ext.com.kitfox.svg</groupId>
 			<artifactId>svg-salamander</artifactId>
-			<version>1.0</version>
+			<version>0.1.19</version>
 		</dependency>
 
 
