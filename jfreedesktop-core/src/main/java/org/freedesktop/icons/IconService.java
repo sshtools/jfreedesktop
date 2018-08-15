@@ -10,7 +10,7 @@ import org.freedesktop.themes.ThemeService;
  * Implementations of this service interface provide an easy way for Java to use
  * the Freedesktop <a href=
  * "http://standards.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html">Icon
- * Theme Specification</a></i>.
+ * Theme Specification</a>
  * <p>
  * To use the API, you must add (in the order that the locations should be
  * searched) at lease one <i>Base</i> directory using the
