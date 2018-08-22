@@ -1,8 +1,25 @@
+/**
+ * Copyright © 2006 - 2018 SSHTOOLS Limited (support@sshtools.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.freedesktop.icons;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,7 +27,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
-import org.apache.commons.vfs2.FileObject;
 import org.freedesktop.themes.AbstractTheme;
 import org.freedesktop.util.INIFile;
 
@@ -24,13 +40,13 @@ public class IconTheme extends AbstractTheme {
 	private List<String> inherits;
 	private boolean hidden;
 	private List<Directory> directories;
-	private FileObject themeFile;
+	private Path themeFile;
 
-	public IconTheme(FileObject... base) throws IOException {
+	public IconTheme(Path... base) throws IOException {
 		super(ICON_THEME, base);
-		for (FileObject b : base) {
-			FileObject f = b.resolveFile("index.theme");
-			if (f.exists()) {
+		for (Path b : base) {
+			Path f = b.resolve("index.theme");
+			if (Files.exists(f)) {
 				themeFile = f;
 				break;
 			}
@@ -92,11 +108,11 @@ public class IconTheme extends AbstractTheme {
 		return directories;
 	}
 
-	public FileObject lookupIcon(String icon, int size) throws IOException {
+	public Path lookupIcon(String icon, int size) throws IOException {
 		checkLoaded();
 		for (Directory directory : getDirectories()) {
 			if (directory.isMatchesSize(size)) {
-				FileObject file = directory.findIcon(icon);
+				Path file = directory.findIcon(icon);
 				if (file != null) {
 					return file;
 				}
@@ -104,14 +120,14 @@ public class IconTheme extends AbstractTheme {
 		}
 
 		int minimalSize = Integer.MAX_VALUE;
-		FileObject closestFile = null;
-		FileObject firstFile = null;
+		Path closestFile = null;
+		Path firstFile = null;
 		for (Directory directory : getDirectories()) {
 			for (String ext : DefaultIconService.SUPPORTED_EXTENSIONS) {
-				for (FileObject base : getBases()) {
-					FileObject file = base.resolveFile(directory.getKey() + File.separator + icon + "." + ext);
+				for (Path base : getBases()) {
+					Path file = base.resolve(directory.getKey() + File.separator + icon + "." + ext);
 					int directorySizeDistance = directorySizeDistance(directory, size);
-					if (file.exists()) {
+					if (Files.exists(file)) {
 						if (directorySizeDistance < minimalSize) {
 							closestFile = file;
 							minimalSize = directorySizeDistance;

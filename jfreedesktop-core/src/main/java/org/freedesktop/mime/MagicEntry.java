@@ -1,19 +1,32 @@
+/**
+ * Copyright © 2006 - 2018 SSHTOOLS Limited (support@sshtools.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.freedesktop.mime;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
-import org.apache.commons.vfs2.FileObject;
-import org.apache.commons.vfs2.RandomAccessContent;
-import org.apache.commons.vfs2.util.RandomAccessMode;
 import org.freedesktop.FreedesktopEntity;
 import org.freedesktop.mime.MagicEntry.Pattern;
 
 @SuppressWarnings("serial")
-public class MagicEntry extends ArrayList<Pattern> implements
-		FreedesktopEntity, Comparable<MagicEntry> {
-
+public class MagicEntry extends ArrayList<Pattern> implements FreedesktopEntity, Comparable<MagicEntry> {
 	public static class Pattern implements Comparable<Pattern> {
 		private int indent = 0;
 		private long offset;
@@ -77,12 +90,10 @@ public class MagicEntry extends ArrayList<Pattern> implements
 
 		@Override
 		public String toString() {
-			return "Pattern [valueLength=" + valueLength + ", value=" + debugValue(getValue()) + ", mask="
-					+ debugValue(getMask()) + ", indent=" + indent + ", offset="
-					+ offset + ", wordSize=" + wordSize + ", rangeLength="
-					+ rangeLength + "]";
+			return "Pattern [valueLength=" + valueLength + ", value=" + debugValue(getValue()) + ", mask=" + debugValue(getMask())
+					+ ", indent=" + indent + ", offset=" + offset + ", wordSize=" + wordSize + ", rangeLength=" + rangeLength + "]";
 		}
-		
+
 		public int getValueLength() {
 			return valueLength;
 		}
@@ -136,22 +147,19 @@ public class MagicEntry extends ArrayList<Pattern> implements
 		return mimeType;
 	}
 
-	public boolean match(FileObject file) throws IOException {
-		RandomAccessContent s = file.getContent().getRandomAccessContent(
-				RandomAccessMode.READ);
+	public boolean match(Path file) throws IOException {
+		FileChannel s = FileChannel.open(file, StandardOpenOption.READ);
 		try {
 			for (Pattern p : this) {
-
 				byte[] val = p.getValue();
 				byte[] mask = p.getMask();
-
 				// Read in portion of file
-				ByteBuffer buf = ByteBuffer.allocate(p.getRangeLength()
-						+ val.length);
-				s.seek(p.getOffset());
+				ByteBuffer buf = ByteBuffer.allocate(p.getRangeLength() + val.length);
+				s.position(p.getOffset());
+				do {
+					s.read(buf);
+				} while (buf.hasRemaining());
 				byte[] bufArr = buf.array();
-				s.readFully(bufArr);
-
 				int valIdx = 0;
 				for (int i = 0; i < bufArr.length; i++) {
 					if ((bufArr[i] & mask[valIdx]) == (val[valIdx] & mask[valIdx])) {
@@ -172,8 +180,7 @@ public class MagicEntry extends ArrayList<Pattern> implements
 
 	@Override
 	public String toString() {
-		return "MagicEntry [mimeType=" + mimeType + ", priority=" + priority
-				+ ", toString()=" + super.toString() + "]";
+		return "MagicEntry [mimeType=" + mimeType + ", priority=" + priority + ", toString()=" + super.toString() + "]";
 	}
 
 	public int compareTo(MagicEntry o) {

@@ -1,7 +1,24 @@
+/**
+ * Copyright © 2006 - 2018 SSHTOOLS Limited (support@sshtools.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.freedesktop;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +26,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 
-import org.apache.commons.vfs2.FileObject;
 import org.freedesktop.util.INIFile;
 import org.freedesktop.util.Log;
 
@@ -20,13 +36,13 @@ public abstract class AbstractFreedesktopEntity implements FreedesktopResource {
 
 	protected String example;
 
-	private List<FileObject> bases = new ArrayList<FileObject>();
+	private List<Path> bases = new ArrayList<Path>();
 	private Properties entityProperties;
 	private String internalName;
 	private String entityTypeName;
 	private boolean loaded;
 
-	public AbstractFreedesktopEntity(String entityTypeName, FileObject... base) {
+	public AbstractFreedesktopEntity(String entityTypeName, Path... base) {
 		this.entityTypeName = entityTypeName;
 		init(base);
 	}
@@ -64,8 +80,8 @@ public abstract class AbstractFreedesktopEntity implements FreedesktopResource {
 		return getLocalisableField(COMMENT, language);
 	}
 
-	public void load(FileObject file) throws IOException, ParseException {
-		InputStream in = file.getContent().getInputStream();
+	public void load(Path file) throws IOException, ParseException {
+		InputStream in = Files.newInputStream(file);
 		try {
 			load(in);
 		} finally {
@@ -94,11 +110,11 @@ public abstract class AbstractFreedesktopEntity implements FreedesktopResource {
 
 	protected abstract void initFromProperties(INIFile iniFile, Properties properties) throws IOException, ParseException;
 
-	public List<FileObject> getBases() {
+	public List<Path> getBases() {
 		return bases;
 	}
 
-	public FileObject getBase() {
+	public Path getBase() {
 		return bases.get(0);
 	}
 
@@ -119,16 +135,16 @@ public abstract class AbstractFreedesktopEntity implements FreedesktopResource {
 		return name;
 	}
 
-	protected void init(FileObject... bases) {
+	protected void init(Path... bases) {
 		if(bases.length == 0)
 			throw new IllegalArgumentException("Entity must have at least one base.");
 		this.bases.addAll(Arrays.asList(bases));
 		String base = null;
-		for(FileObject s : bases) {
+		for(Path s : bases) {
 			if(base == null) {
-				base = s.getName().getBaseName();
+				base = s.getFileName().toString();
 			}
-			else if(!base.equals(s.getName().getBaseName())) {
+			else if(!base.equals(s.getFileName().toString())) {
 				throw new IllegalArgumentException("All bases must have the same filename.");				
 			}
 		}

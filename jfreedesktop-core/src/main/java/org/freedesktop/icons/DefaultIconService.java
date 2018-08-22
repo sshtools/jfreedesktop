@@ -1,10 +1,26 @@
+/**
+ * Copyright © 2006 - 2018 SSHTOOLS Limited (support@sshtools.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.freedesktop.icons;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -12,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.commons.vfs2.FileObject;
 import org.freedesktop.themes.AbstractThemeService;
 import org.freedesktop.util.Log;
 
@@ -32,7 +47,7 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 	public final static String[] SUPPORTED_EXTENSIONS = { "png", "svg", "gif", "xpm" };
 
 	// Private instance variables
-	private Map<String, FileObject> cache = new HashMap<String, FileObject>();
+	private Map<String, Path> cache = new HashMap<String, Path>();
 
 	private boolean returnMissingImage = true;
 	private Map<String, String> existing = new TreeMap<String, String>();
@@ -63,16 +78,16 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 				return theme;
 			}
 		}
-		FileObject firstBase = bases.keySet().isEmpty() ? null : bases.keySet().iterator().next();
+		Path firstBase = bases.keySet().isEmpty() ? null : bases.keySet().iterator().next();
 		return firstBase == null ? null : bases.get(firstBase).iterator().next();
 	}
 
-	public void addBase(FileObject base) throws IOException {
+	public void addBase(Path base) throws IOException {
 		super.addBase(base);
 		clearCache();
 	}
 
-	public void removeBase(FileObject base) {
+	public void removeBase(Path base) {
 		super.removeBase(base);
 		clearCache();
 	}
@@ -83,7 +98,7 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 		preCache();
 	}
 
-	public Iterator<FileObject> icons(int size) {
+	public Iterator<Path> icons(int size) {
 		return new IconIterator(size);
 	}
 
@@ -91,9 +106,9 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 		return existing.keySet().iterator();
 	}
 
-	public FileObject findIcon(String name, int size) throws IOException {
+	public Path findIcon(String name, int size) throws IOException {
 		String key = name + "_" + size;
-		FileObject file = null;
+		Path file = null;
 		if (cache.containsKey(key)) {
 			return cache.get(key);
 		}
@@ -124,8 +139,8 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 		return null;
 	}
 
-	private FileObject returnMissing(String name, int size, String key, IOException ioe) throws IOException {
-		FileObject file = null;
+	private Path returnMissing(String name, int size, String key, IOException ioe) throws IOException {
+		Path file = null;
 		if (!name.equals("image-missing") && returnMissingImage) {
 			file = findIcon("image-missing", size);
 			if (file != null) {
@@ -141,9 +156,9 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 
 	public boolean isIconExists(String name, int size) throws IOException {
 		String key = name + "_" + size;
-		FileObject file = cache.get(key);
+		Path file = cache.get(key);
 		;
-		if (file != null && file.exists()) {
+		if (file != null && Files.exists(file)) {
 			return true;
 		}
 		IconTheme theme = getSelectedTheme();
@@ -217,14 +232,14 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 		}
 	}
 
-	protected Collection<IconTheme> scanBase(FileObject base) throws IOException {
+	protected Collection<IconTheme> scanBase(Path base) throws IOException {
 		List<IconTheme> themes = new ArrayList<IconTheme>();
-		FileObject[] listDirs = listDirs(base);
-		for (FileObject dir : listDirs) {
+		Path[] listDirs = listDirs(base);
+		for (Path dir : listDirs) {
 			// TODO cursor themes not supported here
-			FileObject cursorTheme = dir.resolveFile("cursor.theme");
-			FileObject cursorsDir = dir.resolveFile("cursors");
-			if (cursorTheme.exists() || cursorsDir.exists()) {
+			Path cursorTheme = dir.resolve("cursor.theme");
+			Path cursorsDir = dir.resolve("cursors");
+			if (Files.exists(cursorTheme) || Files.exists(cursorsDir)) {
 				// Skip
 				Log.debug("Skipping " + dir + " because it is a cursor theme.");
 				continue;
@@ -236,17 +251,17 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 				// Skip
 				Log.debug("Skipping " + dir + " because index.theme is missing.");
 			} catch (IOException ioe) {
-				Log.warn("Invalid theme directory " + dir.getName().getPath() + "." + ioe.getMessage());
+				Log.warn("Invalid theme directory " + dir.toString() + "." + ioe.getMessage());
 			}
 		}
 		return themes;
 	}
 
-	FileObject lookupFallbackIcon(String iconname) throws IOException {
-		for (FileObject base : bases.keySet()) {
+	Path lookupFallbackIcon(String iconname) throws IOException {
+		for (Path base : bases.keySet()) {
 			for (String extension : SUPPORTED_EXTENSIONS) {
-				FileObject f = base.resolveFile(iconname + "." + extension);
-				if (f.exists()) {
+				Path f = base.resolve(iconname + "." + extension);
+				if (Files.exists(f)) {
 					return f;
 				}
 			}
@@ -254,8 +269,8 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 		throw new IOException("No theme or fallback icon for " + iconname + ".");
 	}
 
-	FileObject findIconHelper(String icon, int size, IconTheme theme) throws IOException {
-		FileObject filename = theme.lookupIcon(icon, size);
+	Path findIconHelper(String icon, int size, IconTheme theme) throws IOException {
+		Path filename = theme.lookupIcon(icon, size);
 		if (filename != null) {
 			return filename;
 		}
@@ -285,7 +300,7 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 
 	private static final String HICOLOR = "hicolor";
 
-	class IconIterator implements Iterator<FileObject> {
+	class IconIterator implements Iterator<Path> {
 
 		private int size;
 		private Iterator<String> icons;
@@ -299,7 +314,7 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 			return icons.hasNext();
 		}
 
-		public FileObject next() {
+		public Path next() {
 			String icon = icons.next();
 			try {
 				return findIcon(icon, size);

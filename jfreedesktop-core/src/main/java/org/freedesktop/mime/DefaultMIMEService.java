@@ -1,26 +1,37 @@
+/**
+ * Copyright © 2006 - 2018 SSHTOOLS Limited (support@sshtools.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.freedesktop.mime;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileSystemException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.commons.vfs2.FileObject;
-import org.apache.commons.vfs2.FileSelectInfo;
-import org.apache.commons.vfs2.FileSelector;
-import org.apache.commons.vfs2.FileSystemException;
-import org.apache.commons.vfs2.FileType;
 import org.freedesktop.AbstractFreedesktopService;
 import org.freedesktop.util.Log;
 
-public class DefaultMIMEService extends AbstractFreedesktopService<MIMEEntry>
-		implements MIMEService {
-
-	private Map<FileObject, MimeBase> mimeBases = new TreeMap<FileObject, MimeBase>(
-			new FileObjectComparator());
+public class DefaultMIMEService extends AbstractFreedesktopService<MIMEEntry> implements MIMEService {
+	private Map<Path, MimeBase> mimeBases = new TreeMap<Path, MimeBase>(new PathComparator());
 	private GlobService globService;
 	private AliasService aliasService;
 	private MagicService magicService;
@@ -28,8 +39,7 @@ public class DefaultMIMEService extends AbstractFreedesktopService<MIMEEntry>
 	public DefaultMIMEService() {
 	}
 
-	public DefaultMIMEService(GlobService globService,
-			AliasService aliasService, MagicService magicService) {
+	public DefaultMIMEService(GlobService globService, AliasService aliasService, MagicService magicService) {
 		this.globService = globService;
 		this.aliasService = aliasService;
 		this.magicService = magicService;
@@ -43,38 +53,28 @@ public class DefaultMIMEService extends AbstractFreedesktopService<MIMEEntry>
 	}
 
 	@Override
-	protected Collection<MIMEEntry> scanBase(FileObject base)
-			throws IOException {
-		FileObject[] d = listDirs(base);
+	protected Collection<MIMEEntry> scanBase(Path base) throws IOException {
+		Path[] d = listDirs(base);
 		MimeBase mimeBase = new MimeBase();
 		mimeBases.put(base, mimeBase);
 		if (d != null) {
-			for (FileObject dir : d) {
-				String family = dir.getName().getBaseName();
+			for (Path dir : d) {
+				String family = dir.getFileName().toString();
 				if (!family.equals("packages")) {
 					Log.debug("Scanning family " + family);
-					FileObject[] t = dir.findFiles(new FileSelector() {
-						public boolean traverseDescendents(FileSelectInfo info)
-								throws Exception {
-							return info.getDepth() == 0;
+					try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, new DirectoryStream.Filter<Path>() {
+						@Override
+						public boolean accept(Path entry) throws IOException {
+							return entry.getFileName().toString().toLowerCase().endsWith(".xml");
 						}
-
-						public boolean includeFile(FileSelectInfo info)
-								throws Exception {
-							return info.getFile().getName().getBaseName()
-									.toLowerCase().endsWith(".xml");
+					})) {
+						for (Path type : stream) {
+							String typeName = type.getFileName().toString().substring(0,
+									type.getFileName().toString().length() - 4);
+							MIMEEntry entry = new MIMEEntry(family, typeName, type);
+							Log.debug("    Adding type " + entry.getInternalName());
+							mimeBase.byType.put(entry.getInternalName(), entry);
 						}
-					});
-					for (FileObject type : t) {
-						String typeName = type
-								.getName()
-								.getBaseName()
-								.substring(
-										0,
-										type.getName().getBaseName().length() - 4);
-						MIMEEntry entry = new MIMEEntry(family, typeName, type);
-						Log.debug("    Adding type " + entry.getInternalName());
-						mimeBase.byType.put(entry.getInternalName(), entry);
 					}
 				}
 			}
@@ -82,37 +82,28 @@ public class DefaultMIMEService extends AbstractFreedesktopService<MIMEEntry>
 		return mimeBase.byType.values();
 	}
 
-	public void removeBase(FileObject base) {
+	public void removeBase(Path base) {
 		super.removeBase(base);
 		mimeBases.remove(base);
 	}
 
-	public MIMEEntry getMimeTypeForFile(FileObject file, boolean useMagic)
-			throws IOException {
+	public MIMEEntry getMimeTypeForFile(Path file, boolean useMagic) throws IOException {
 		// Directories are always inode/directory
-		try {
-			if (file.getType().equals(FileType.FOLDER)) {
-				return getEntryForMimeType("inode/directory");
-			}
-		} catch (FileSystemException e) {
-			throw new Error(e);
+		if (Files.isDirectory(file)) {
+			return getEntryForMimeType("inode/directory");
 		}
-
 		// First try matching using glob pattterns
 		try {
-			MIMEEntry mimeTypeForPattern = getMimeTypeForPattern(file.getName()
-					.getPath());
+			MIMEEntry mimeTypeForPattern = getMimeTypeForPattern(file.toString());
 			if (mimeTypeForPattern != null) {
 				return mimeTypeForPattern;
 			}
 		} catch (MagicRequiredException mre) {
 			Log.debug("Conflicting match, magic required");
-
 			// Try and get exact match using magic
 			if (useMagic) {
 				for (GlobEntry ge : mre.getAlternatives()) {
-					MagicEntry me = magicService
-							.getEntity(ge.getInternalName());
+					MagicEntry me = magicService.getEntity(ge.getInternalName());
 					if (me == null) {
 						Log.debug("NO Mime Entry for " + ge.getInternalName());
 					}
@@ -125,7 +116,6 @@ public class DefaultMIMEService extends AbstractFreedesktopService<MIMEEntry>
 					}
 				}
 			}
-
 			// Return the first one we have a mime entry for
 			for (GlobEntry ge : mre.getAlternatives()) {
 				Log.debug("Trying " + ge.getInternalName());
@@ -137,42 +127,35 @@ public class DefaultMIMEService extends AbstractFreedesktopService<MIMEEntry>
 					return me;
 				}
 			}
-
 		}
-
 		/*
 		 * If the glob matching fails or results in multiple conflicting
 		 * mimetypes, read the contents of the file and do magic sniffing on it.
 		 */
 		//
-		// Log.warn("Slow magic search  for " + file.getName());
+		// Log.warn("Slow magic search for " + file.getName());
 		// for (MagicEntry me : magicService.getAllEntities()) {
 		// if (me.match(file)) {
 		// return getEntity(me.getInternalName());
 		// }
 		// }
-
-		if(useMagic) {
+		if (useMagic) {
 			return checkForTextOrBinary(file);
-		}
-		else {
+		} else {
 			return getEntity("application/octet-stream");
 		}
 	}
 
-	private MIMEEntry checkForTextOrBinary(FileObject file)
-			throws FileSystemException, IOException {
+	private MIMEEntry checkForTextOrBinary(Path file) throws FileSystemException, IOException {
 		/*
 		 * If no magic rule matches the data (or if the content is not
 		 * available), use the default type of application/octet-stream for
 		 * binary data, or text/plain for textual data. If there was no glob
 		 * match the magic match as the result.
 		 */
-
-		InputStream in = file.getContent().getInputStream();
+		InputStream in = Files.newInputStream(file);
 		try {
-			byte[] buf = new byte[(int) Math.min(32l, file.getContent()
-					.getSize())];
+			byte[] buf = new byte[(int) Math.min(32l, Files.size(file))];
 			DataInputStream din = new DataInputStream(in);
 			din.readFully(buf);
 			for (byte b : buf) {
@@ -183,12 +166,10 @@ public class DefaultMIMEService extends AbstractFreedesktopService<MIMEEntry>
 		} finally {
 			in.close();
 		}
-
 		return getEntity("text/plain");
 	}
 
-	public MIMEEntry getMimeTypeForPattern(String text)
-			throws MagicRequiredException {
+	public MIMEEntry getMimeTypeForPattern(String text) throws MagicRequiredException {
 		GlobEntry globEntry = globService.match(text);
 		if (globEntry != null) {
 			MIMEEntry entry = getEntryForMimeType(globEntry.getInternalName());
@@ -200,12 +181,10 @@ public class DefaultMIMEService extends AbstractFreedesktopService<MIMEEntry>
 	}
 
 	public MIMEEntry getEntryForMimeType(String mimeType) {
-		for (FileObject base : getBasesInReverse()) {
-			AliasEntry alias = aliasService == null ? null : aliasService
-					.getAliasEntryForMimeType(mimeType);
+		for (Path base : getBasesInReverse()) {
+			AliasEntry alias = aliasService == null ? null : aliasService.getAliasEntryForMimeType(mimeType);
 			MimeBase mimeBase = mimeBases.get(base);
-			MIMEEntry entry = mimeBase.byType.get(alias != null ? alias
-					.getAlias() : mimeType);
+			MIMEEntry entry = mimeBase.byType.get(alias != null ? alias.getAlias() : mimeType);
 			if (alias != null && entry == null) {
 				// Just in case the alias was bad
 				entry = mimeBase.byType.get(mimeType);
@@ -218,14 +197,12 @@ public class DefaultMIMEService extends AbstractFreedesktopService<MIMEEntry>
 	}
 
 	public String getDefaultExtension(MIMEEntry mimeEntry) {
-		GlobEntry entry = globService
-				.getByMimeType(mimeEntry.getInternalName());
+		GlobEntry entry = globService.getByMimeType(mimeEntry.getInternalName());
 		return entry == null ? null : entry.getPatterns().iterator().next();
 	}
 
 	public Collection<String> getExtensionsForMimeType(MIMEEntry mimeEntry) {
-		GlobEntry entry = globService
-				.getByMimeType(mimeEntry.getInternalName());
+		GlobEntry entry = globService.getByMimeType(mimeEntry.getInternalName());
 		return entry == null ? null : entry.getPatterns();
 	}
 

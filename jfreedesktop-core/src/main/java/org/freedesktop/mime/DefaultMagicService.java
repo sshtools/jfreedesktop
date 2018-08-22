@@ -1,37 +1,46 @@
+/**
+ * Copyright © 2006 - 2018 SSHTOOLS Limited (support@sshtools.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.freedesktop.mime;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.commons.vfs2.FileObject;
 import org.freedesktop.AbstractFreedesktopService;
 import org.freedesktop.mime.MagicEntry.Pattern;
 
-public class DefaultMagicService extends AbstractFreedesktopService<MagicEntry>
-		implements MagicService {
-
-	private Map<FileObject, MagicBase> magicBases = new TreeMap<FileObject, MagicBase>(
-			new FileObjectComparator());
+public class DefaultMagicService extends AbstractFreedesktopService<MagicEntry> implements MagicService {
+	private Map<Path, MagicBase> magicBases = new TreeMap<Path, MagicBase>(new PathComparator());
 
 	@Override
-	protected Collection<MagicEntry> scanBase(FileObject base)
-			throws IOException {
-		System.out.println(base);
-		FileObject f = base.resolveFile("magic");
+	protected Collection<MagicEntry> scanBase(Path base) throws IOException {
+		Path f = base.resolve("magic");
 		MagicBase aliasBase = new MagicBase();
 		magicBases.put(base, aliasBase);
-		InputStream fin = f.getContent().getInputStream();
+		InputStream fin = Files.newInputStream(f);
 		try {
 			byte[] buf = new byte[65536];
 			StringBuilder bui = new StringBuilder();
-
 			int state = -1;
-
 			// -1 outside of format
 			// 0 file header
 			// 1 in header (priority)
@@ -47,7 +56,6 @@ public class DefaultMagicService extends AbstractFreedesktopService<MagicEntry>
 			// 11 word-size
 			// 12 range-length
 			// 13 done
-
 			MagicEntry entry = null;
 			Pattern pattern = null;
 			int valueLength = 0;
@@ -61,7 +69,6 @@ public class DefaultMagicService extends AbstractFreedesktopService<MagicEntry>
 					byte b = buf[i];
 					// System.out.println((int)b + "[" + (char)b + "] = " +
 					// state);
-
 					if (state == -1) {
 						if (b == '\n') {
 							state = 0;
@@ -90,8 +97,7 @@ public class DefaultMagicService extends AbstractFreedesktopService<MagicEntry>
 							entry.setMIMEType(bui.toString());
 							bui.setLength(0);
 							state = 3;
-							aliasBase.byType
-									.put(entry.getInternalName(), entry);
+							aliasBase.byType.put(entry.getInternalName(), entry);
 						} else {
 							bui.append((char) b);
 						}
@@ -151,20 +157,17 @@ public class DefaultMagicService extends AbstractFreedesktopService<MagicEntry>
 							state = 9;
 						}
 					} else if (state == 11) {
-						pattern.setWordSize(Integer.parseInt(String
-								.valueOf((char) b)));
+						pattern.setWordSize(Integer.parseInt(String.valueOf((char) b)));
 						state = 9;
 					} else if (state == 12) {
 						if (b == '\n') {
-							pattern.setRangeLength(Integer.parseInt(bui
-									.toString()));
+							pattern.setRangeLength(Integer.parseInt(bui.toString()));
 							bui.setLength(0);
 							state = 13;
 						} else {
 							bui.append((char) b);
 						}
 					}
-
 					// Done
 					if (state == 13) {
 						entry.add(pattern);
@@ -176,16 +179,14 @@ public class DefaultMagicService extends AbstractFreedesktopService<MagicEntry>
 		} finally {
 			fin.close();
 		}
-
 		// Sort the patterns in the base
 		for (MagicEntry e : aliasBase.byType.values()) {
 			Collections.sort(e);
 		}
-
 		return aliasBase.byType.values();
 	}
 
-	public void removeBase(FileObject base) {
+	public void removeBase(Path base) {
 		super.removeBase(base);
 		magicBases.remove(base);
 	}
@@ -195,7 +196,7 @@ public class DefaultMagicService extends AbstractFreedesktopService<MagicEntry>
 	}
 
 	public MagicEntry getMagicEntryForMimeType(String mimeType) {
-		for (FileObject base : getBasesInReverse()) {
+		for (Path base : getBasesInReverse()) {
 			MagicEntry entry = magicBases.get(base).byType.get(mimeType);
 			if (entry != null) {
 				return entry;

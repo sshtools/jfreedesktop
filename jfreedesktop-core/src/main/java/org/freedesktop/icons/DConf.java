@@ -1,3 +1,18 @@
+/**
+ * Copyright © 2006 - 2018 SSHTOOLS Limited (support@sshtools.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.freedesktop.icons;
 
 import java.io.BufferedReader;
@@ -9,12 +24,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.freedesktop.util.Log;
 
 public class DConf {
-	
-	final static Log LOG = LogFactory.getLog(DConf.class);
 
 	// TODO escaping
 
@@ -53,7 +65,7 @@ public class DConf {
 						type = String.class;
 						values.add(s.substring(1, s.length() - 1));
 					} else {
-						LOG.warn("Could not parse '" + s + "'");
+						Log.warn("Could not parse '" + s + "'");
 					}
 				}
 				exists = true;
@@ -70,7 +82,7 @@ public class DConf {
 						exists = true;
 						values.add(l);
 					} catch (NumberFormatException nfe2) {
-						LOG.warn("Could not parse '" + line + "'");
+						Log.warn("Could not parse '" + line + "'");
 					}
 				}
 			}
@@ -124,6 +136,7 @@ public class DConf {
 			try {
 				String line = null;
 				while ((line = r.readLine()) != null) {
+					Log.debug("DConf output: " + line);
 					if (line.endsWith("/")) {
 						DConf d = new DConf(path + line);
 						children.put(line, d);

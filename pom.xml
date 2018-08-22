@@ -1,19 +1,47 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<!--
+
+    Copyright © 2006 - 2018 SSHTOOLS Limited (support@sshtools.com)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<!-- Copyright © 2006 - ${year} SSHTOOLS Limited (support@sshtools.com) Licensed 
+	under the Apache License, Version 2.0 (the "License"); you may not use this 
+	file except in compliance with the License. You may obtain a copy of the 
+	License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by 
+	applicable law or agreed to in writing, software distributed under the License 
+	is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY 
+	KIND, either express or implied. See the License for the specific language 
+	governing permissions and limitations under the License. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<properties>
-		<maven.compiler.target>1.6</maven.compiler.target>
-		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.sshtools</groupId>
 	<artifactId>jfreedesktop</artifactId>
-	<version>2.1.2-SNAPSHOT</version>
+	<version>3.0.0-SNAPSHOT</version>
 	<name>JFreeDesktop</name>
 	<description>Implements a select few freedesktop.org standard in Java.</description>
 	<url>http://www.sshtools.com</url>
 	<packaging>pom</packaging>
+	<inceptionYear>2006</inceptionYear>
 
 	<distributionManagement>
 		<snapshotRepository>
@@ -73,18 +101,12 @@
 			<build>
 				<plugins>
 					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+					</plugin>
+					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.1</version>
-						<executions>
-							<execution>
-								<id>sign-artifacts</id>
-								<phase>verify</phase>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-							</execution>
-						</executions>
 					</plugin>
 				</plugins>
 			</build>
@@ -96,38 +118,13 @@
 			<plugins>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-source-plugin</artifactId>
-					<version>2.2.1</version>
-					<executions>
-						<execution>
-							<id>attach-sources</id>
-							<goals>
-								<goal>jar-no-fork</goal>
-							</goals>
-						</execution>
-					</executions>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.7.1</version>
 				</plugin>
 				<plugin>
-					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.10.4</version>
-					<executions>
-						<execution>
-							<id>javadoc-jar</id>
-							<phase>package</phase>
-							<goals>
-								<goal>jar</goal>
-							</goals>
-							<configuration>
-								<!-- switch on dependency-driven aggregation -->
-								<includeDependencySources>false</includeDependencySources>
-								<dependencySourceIncludes>
-									<!-- include ONLY dependencies I control -->
-									<dependencySourceInclude>com.sshtools:*</dependencySourceInclude>
-								</dependencySourceIncludes>
-								<additionalparam>-Xdoclint:none</additionalparam>
-							</configuration>
-						</execution>
-					</executions>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.12</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -148,8 +145,9 @@
 					<artifactId>license-maven-plugin</artifactId>
 					<version>2.3</version>
 					<configuration>
-						<header>templates/Apache-2.txt</header>
+						<header>templates/APACHE-2.txt</header>
 						<properties>
+							<year>${year}</year>
 							<owner>SSHTOOLS Limited</owner>
 							<email>support@sshtools.com</email>
 						</properties>
@@ -162,9 +160,7 @@
 					<executions>
 						<execution>
 							<goals>
-								<goal>check</goal>
 								<goal>format</goal>
-								<goal>remove</goal>
 							</goals>
 						</execution>
 					</executions>
@@ -182,6 +178,71 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<id>timestamp-property</id>
+						<goals>
+							<goal>timestamp-property</goal>
+						</goals>
+						<configuration>
+							<name>year</name>
+							<pattern>yyyy</pattern>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.mycila</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<additionalparam>-Xdoclint:none</additionalparam>
+							<!-- switch on dependency-driven aggregation -->
+							<includeDependencySources>false</includeDependencySources>
+							<dependencySourceIncludes>
+								<!-- include ONLY dependencies I control -->
+								<dependencySourceInclude>com.sshtools:*</dependencySourceInclude>
+							</dependencySourceIncludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
 	<reporting>
 		<plugins>

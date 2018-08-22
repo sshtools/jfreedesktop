@@ -1,7 +1,24 @@
+/**
+ * Copyright © 2006 - 2018 SSHTOOLS Limited (support@sshtools.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.freedesktop.mime;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -12,7 +29,6 @@ import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.apache.commons.vfs2.FileObject;
 import org.freedesktop.FreedesktopResource;
 import org.freedesktop.util.Log;
 import org.w3c.dom.Document;
@@ -40,7 +56,7 @@ public class MIMEEntry extends DefaultHandler implements FreedesktopResource {
 	private String family;
 	private String type;
 
-	public MIMEEntry(String family, String type, FileObject file) throws IOException {
+	public MIMEEntry(String family, String type, Path file) throws IOException {
 		this.family = family;
 		this.type = type;
 		this.name = family + "/" + type;
@@ -144,13 +160,13 @@ public class MIMEEntry extends DefaultHandler implements FreedesktopResource {
 		return genericIcon;
 	}
 
-	void load(FileObject file) throws IOException {
+	void load(Path file) throws IOException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setValidating(false);
 		factory.setNamespaceAware(true);
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			InputStream in = file.getContent().getInputStream();
+			InputStream in = Files.newInputStream(file);
 			try {
 				Document document = builder.parse(in);
 				build(document);

@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.freedesktop.wallpapers;
+package org.freedesktop.mime;
 
-import org.freedesktop.themes.ThemeService;
+import java.nio.file.Path;
+import java.util.Comparator;
 
-/**
- * Implementations of this service interface provide an easy way for Java to use
- * the <a href="http://www.freedesktop.org/wiki/">freedesktop.org</a>'s wallpaper 
- * themes. 
- */
-public interface WallpaperService extends ThemeService<Wallpaper> {
+public final class PathComparator implements Comparator<Path> {
+	public int compare(Path o1, Path o2) {
+		return o1.toString().compareTo(o2.toString());
+	}
 }

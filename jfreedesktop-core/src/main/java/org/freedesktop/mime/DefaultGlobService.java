@@ -1,8 +1,25 @@
+/**
+ * Copyright © 2006 - 2018 SSHTOOLS Limited (support@sshtools.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.freedesktop.mime;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,23 +27,17 @@ import java.util.Map;
 import java.util.Stack;
 import java.util.TreeMap;
 
-import org.apache.commons.vfs2.FileObject;
 import org.freedesktop.AbstractFreedesktopService;
 
-public class DefaultGlobService extends AbstractFreedesktopService<GlobEntry>
-		implements GlobService {
-
-	private Map<FileObject, GlobBase> globBases = new TreeMap<FileObject, GlobBase>(
-			new FileObjectComparator());
+public class DefaultGlobService extends AbstractFreedesktopService<GlobEntry> implements GlobService {
+	private Map<Path, GlobBase> globBases = new TreeMap<Path, GlobBase>(new PathComparator());
 
 	@Override
-	protected Collection<GlobEntry> scanBase(FileObject base)
-			throws IOException {
-		FileObject f = base.resolveFile("globs");
+	protected Collection<GlobEntry> scanBase(Path base) throws IOException {
+		Path f = base.resolve("globs");
 		GlobBase globBase = new GlobBase();
 		globBases.put(base, globBase);
-		BufferedReader reader = new BufferedReader(new InputStreamReader(
-				f.getContent().getInputStream()));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(Files.newInputStream(f)));
 		try {
 			String line;
 			while ((line = reader.readLine()) != null) {
@@ -34,12 +45,10 @@ public class DefaultGlobService extends AbstractFreedesktopService<GlobEntry>
 				if (!line.equals("") && !line.startsWith("#")) {
 					int idx = line.indexOf(':');
 					if (idx == -1) {
-						throw new IOException(f + " contains invalid data '"
-								+ line + "'.");
+						throw new IOException(f + " contains invalid data '" + line + "'.");
 					}
 					String mimeType = line.substring(0, idx);
 					String pattern = line.substring(idx + 1);
-
 					// A single mime type may have several patterns
 					GlobEntry entry = globBase.byType.get(mimeType);
 					if (entry == null) {
@@ -47,12 +56,10 @@ public class DefaultGlobService extends AbstractFreedesktopService<GlobEntry>
 						globBase.byType.put(mimeType, entry);
 					}
 					entry.addPattern(pattern);
-
 					// Provide a quick lookup table for simple patterns and
 					// explicit names
 					if (isSimplePattern(pattern) || !isExpression(pattern)) {
-						ArrayList<GlobEntry> entries = globBase.byPattern
-								.get(pattern);
+						ArrayList<GlobEntry> entries = globBase.byPattern.get(pattern);
 						if (entries == null) {
 							entries = new ArrayList<GlobEntry>();
 							globBase.byPattern.put(pattern, entries);
@@ -69,13 +76,13 @@ public class DefaultGlobService extends AbstractFreedesktopService<GlobEntry>
 		return globBase.byType.values();
 	}
 
-	public void removeBase(FileObject base) {
+	public void removeBase(Path base) {
 		super.removeBase(base);
 		globBases.remove(base);
 	}
 
 	public GlobEntry match(String text) throws MagicRequiredException {
-		for (FileObject base : getBasesInReverse()) {
+		for (Path base : getBasesInReverse()) {
 			GlobEntry entry = match(base, text);
 			if (entry != null) {
 				return entry;
@@ -89,19 +96,16 @@ public class DefaultGlobService extends AbstractFreedesktopService<GlobEntry>
 		return null;
 	}
 
-	GlobEntry match(FileObject base, String text) throws MagicRequiredException {
+	GlobEntry match(Path base, String text) throws MagicRequiredException {
 		// First lookup explicit pattern
 		GlobBase globBase = globBases.get(base);
 		if (globBase.byPattern.containsKey(text)) {
 			ArrayList<GlobEntry> arrayList = globBase.byPattern.get(text);
 			if (arrayList.size() > 1) {
-				throw new MagicRequiredException(
-						"Explicit pattern matches more than one entry, magic required.",
-						arrayList);
+				throw new MagicRequiredException("Explicit pattern matches more than one entry, magic required.", arrayList);
 			}
 			return arrayList.get(0);
 		}
-
 		// Now try lookup based on the longest available filename extension
 		int idx = text.indexOf('.');
 		while (idx > -1) {
@@ -110,15 +114,12 @@ public class DefaultGlobService extends AbstractFreedesktopService<GlobEntry>
 			if (globBase.byPattern.containsKey(key)) {
 				ArrayList<GlobEntry> arrayList = globBase.byPattern.get(key);
 				if (arrayList.size() > 1) {
-					throw new MagicRequiredException(
-							"Extension pattern matches more than one entry, magic required.",
-							arrayList);
+					throw new MagicRequiredException("Extension pattern matches more than one entry, magic required.", arrayList);
 				}
 				return arrayList.get(0);
 			}
 			idx = text.indexOf('.', idx + 1);
 		}
-
 		// Still no match, look at all the entries using regexp. matching
 		// against each one
 		GlobEntry match = null;
@@ -128,8 +129,7 @@ public class DefaultGlobService extends AbstractFreedesktopService<GlobEntry>
 					if (match == null) {
 						match = entry;
 					} else {
-						throw new MagicRequiredException(
-								"Regular expression pattern matches more than one entry, magic required.",
+						throw new MagicRequiredException("Regular expression pattern matches more than one entry, magic required.",
 								match, entry);
 					}
 				}
@@ -143,8 +143,7 @@ public class DefaultGlobService extends AbstractFreedesktopService<GlobEntry>
 	 * <p>
 	 * ? becomes ., * becomes .*, {aa,bb} becomes (aa|bb).
 	 * 
-	 * @param glob
-	 *            The glob pattern
+	 * @param glob The glob pattern
 	 * @return regular expression
 	 */
 	public static String globToRE(String glob) {
@@ -152,10 +151,8 @@ public class DefaultGlobService extends AbstractFreedesktopService<GlobEntry>
 		final Object NEG = new Object();
 		final Object GROUP = new Object();
 		Stack<Object> state = new Stack<Object>();
-
 		StringBuffer buf = new StringBuffer();
 		boolean backslash = false;
-
 		for (int i = 0; i < glob.length(); i++) {
 			char c = glob.charAt(i);
 			if (backslash) {
@@ -164,7 +161,6 @@ public class DefaultGlobService extends AbstractFreedesktopService<GlobEntry>
 				backslash = false;
 				continue;
 			}
-
 			switch (c) {
 			case '\\':
 				backslash = true;
@@ -214,7 +210,6 @@ public class DefaultGlobService extends AbstractFreedesktopService<GlobEntry>
 				buf.append(c);
 			}
 		}
-
 		return buf.toString();
 	}
 
@@ -246,12 +241,10 @@ public class DefaultGlobService extends AbstractFreedesktopService<GlobEntry>
 
 	private Collection<GlobEntry> bySimplePattern(String pattern) {
 		if (!isSimplePattern(pattern)) {
-			throw new IllegalArgumentException(
-					"Only simple patterns are cached.");
+			throw new IllegalArgumentException("Only simple patterns are cached.");
 		}
-		for (FileObject base : getBasesInReverse()) {
-			Collection<GlobEntry> entries = globBases.get(base).byPattern
-					.get(pattern);
+		for (Path base : getBasesInReverse()) {
+			Collection<GlobEntry> entries = globBases.get(base).byPattern.get(pattern);
 			if (entries != null) {
 				return entries;
 			}
@@ -260,7 +253,7 @@ public class DefaultGlobService extends AbstractFreedesktopService<GlobEntry>
 	}
 
 	public GlobEntry getByMimeType(String mimeType) {
-		for (FileObject base : getBasesInReverse()) {
+		for (Path base : getBasesInReverse()) {
 			GlobEntry entry = globBases.get(base).byType.get(mimeType);
 			if (entry != null) {
 				return entry;
@@ -273,5 +266,4 @@ public class DefaultGlobService extends AbstractFreedesktopService<GlobEntry>
 		Map<String, GlobEntry> byType = new HashMap<String, GlobEntry>();
 		Map<String, ArrayList<GlobEntry>> byPattern = new HashMap<String, ArrayList<GlobEntry>>();
 	}
-
 }

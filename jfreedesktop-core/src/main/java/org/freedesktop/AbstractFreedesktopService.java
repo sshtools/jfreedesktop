@@ -1,7 +1,25 @@
+/**
+ * Copyright © 2006 - 2018 SSHTOOLS Limited (support@sshtools.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.freedesktop;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,50 +28,42 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.vfs2.FileObject;
-import org.apache.commons.vfs2.FileSelectInfo;
-import org.apache.commons.vfs2.FileSelector;
-import org.apache.commons.vfs2.FileType;
-import org.apache.commons.vfs2.VFS;
-
-
 /**
  * Abstract implementations of a {@link FreedesktopService} that provides
  * methods for maintaining the list of base directories (common to all
  * specifications).
  */
 public abstract class AbstractFreedesktopService<T extends FreedesktopEntity> implements FreedesktopService<T> {
-
 	// Private instance variables
-	protected Map<FileObject, Collection<T>> bases = new HashMap<FileObject, Collection<T>>();
-	protected List<FileObject> basesList = new ArrayList<FileObject>();
+	protected Map<Path, Collection<T>> bases = new HashMap<Path, Collection<T>>();
+	protected List<Path> basesList = new ArrayList<Path>();
 
-	public void addBase(FileObject base) throws IOException {
+	public void addBase(Path base) throws IOException {
 		if (!basesList.contains(base)) {
 			bases.put(base, scanBase(base));
 			basesList.add(base);
 		}
 	}
 
-	public void removeBase(FileObject base) {
+	public void removeBase(Path base) {
 		bases.remove(base);
 		basesList.remove(base);
 	}
 
-	public Collection<T> getEntities(FileObject base) {
+	public Collection<T> getEntities(Path base) {
 		return bases.get(base);
 	}
 
 	public Collection<T> getAllEntities() {
 		List<T> all = new ArrayList<T>();
-		for (FileObject base : getBasesInReverse()) {
+		for (Path base : getBasesInReverse()) {
 			all.addAll(getEntities(base));
 		}
 		return all;
 	}
 
 	public T getEntity(String name) {
-		for (FileObject base : bases.keySet()) {
+		for (Path base : bases.keySet()) {
 			for (T theme : bases.get(base)) {
 				if (theme.getInternalName().equals(name)) {
 					return theme;
@@ -63,48 +73,44 @@ public abstract class AbstractFreedesktopService<T extends FreedesktopEntity> im
 		return null;
 	}
 
-	public Collection<FileObject> getBases() {
+	public Collection<Path> getBases() {
 		return basesList;
 	}
 
-	public Collection<FileObject> getBasesInReverse() {
-		List<FileObject> reverseBases = new ArrayList<FileObject>(basesList);
+	public Collection<Path> getBasesInReverse() {
+		List<Path> reverseBases = new ArrayList<Path>(basesList);
 		Collections.reverse(reverseBases);
 		return reverseBases;
 	}
 
-	protected void checkAndAddBase(FileObject file) throws IOException, ParseException {
-		if (file.exists()) {
+	protected void checkAndAddBase(Path file) throws IOException, ParseException {
+		if (Files.exists(file)) {
 			addBase(file);
 		}
 	}
 
 	protected void checkAndAddBase(File file) throws IOException, ParseException {
 		if (file.exists()) {
-			addBase(VFS.getManager().resolveFile(file.getAbsolutePath()));
+			addBase(file.toPath());
 		}
 	}
 
-	protected FileObject[] listDirs(FileObject dir) throws IOException {
-		FileObject[] dirs = dir.findFiles(new DirectorySelector());
-		if (dirs == null) {
-			throw new IOException("Directory could not be read.");
+	protected Path[] listDirs(Path dir) throws IOException {
+		List<Path> l = new ArrayList<>();
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, new DirectorySelector())) {
+			for (Path type : stream) {
+				l.add(type);
+			}
 		}
-		return dirs;
+		return l.toArray(new Path[0]);
 	}
 
-	protected abstract Collection<T> scanBase(FileObject base) throws IOException;
+	protected abstract Collection<T> scanBase(Path base) throws IOException;
 
-	class DirectorySelector implements FileSelector {
-
-		public boolean includeFile(FileSelectInfo info) throws Exception {
-			return info.getFile().getType().equals(FileType.FOLDER) && !info.getFile().equals(info.getBaseFolder());
+	class DirectorySelector implements DirectoryStream.Filter<Path> {
+		@Override
+		public boolean accept(Path entry) throws IOException {
+			return Files.isDirectory(entry) && !entry.equals(entry.getRoot());
 		}
-       
-		public boolean traverseDescendents(FileSelectInfo info) throws Exception {
-			return info.getDepth() == 0;
-		}
-
 	}
-
 }
