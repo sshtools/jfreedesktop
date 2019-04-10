@@ -134,11 +134,11 @@ public class DefaultMIMEService extends AbstractFreedesktopService<MIMEEntry> im
 		 */
 		//
 		// Log.warn("Slow magic search for " + file.getName());
-		// for (MagicEntry me : magicService.getAllEntities()) {
-		// if (me.match(file)) {
-		// return getEntity(me.getInternalName());
-		// }
-		// }
+//		for (MagicEntry me : magicService.getAllEntities()) {
+//			if (me.match(file)) {
+//				return getEntity(me.getInternalName());
+//			}
+//		}
 		if (useMagic) {
 			return checkForTextOrBinary(file);
 		} else {

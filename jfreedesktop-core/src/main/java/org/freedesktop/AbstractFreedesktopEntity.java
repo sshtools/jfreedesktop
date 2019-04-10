@@ -28,6 +28,7 @@ import java.util.Properties;
 
 import org.freedesktop.util.INIFile;
 import org.freedesktop.util.Log;
+import org.freedesktop.util.Util;
 
 public abstract class AbstractFreedesktopEntity implements FreedesktopResource {
 
@@ -142,7 +143,7 @@ public abstract class AbstractFreedesktopEntity implements FreedesktopResource {
 		String base = null;
 		for(Path s : bases) {
 			if(base == null) {
-				base = s.getFileName().toString();
+				base =  Util.stripTrailingSlash(s.getFileName().toString());
 			}
 			else if(!base.equals(s.getFileName().toString())) {
 				throw new IllegalArgumentException("All bases must have the same filename.");				

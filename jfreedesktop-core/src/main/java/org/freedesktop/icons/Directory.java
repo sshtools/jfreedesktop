@@ -78,8 +78,9 @@ public class Directory {
 		if (properties.containsKey(THRESHOLD)) {
 			minSize = Integer.parseInt(properties.getProperty(THRESHOLD));
 		}
-		for (Path base : theme.getBases()) {
+		for (Path base : theme.getBases()) {			
 			Path dirBase = base.resolve(getKey());
+
 			if (Files.exists(dirBase)) {
 				// Loop over the supported extensions so we get files in
 				// supported
