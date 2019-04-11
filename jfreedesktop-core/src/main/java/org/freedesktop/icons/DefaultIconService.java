@@ -280,7 +280,7 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 			if (parentTheme == null) {
 				Log.debug("Fallback theme " + fallback + " specified");
 			} else {
-				Path filename = findIconHelper(iconname, size, null);
+				Path filename = findIconHelper(iconname, size, parentTheme);
 				if (filename != null) {
 					return filename;
 				}
