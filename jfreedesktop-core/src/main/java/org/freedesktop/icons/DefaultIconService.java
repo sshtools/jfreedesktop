@@ -22,10 +22,13 @@ import java.nio.file.Path;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.freedesktop.themes.AbstractThemeService;
@@ -52,6 +55,7 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 	private boolean returnMissingImage = true;
 	private Map<String, String> existing = new TreeMap<String, String>();
 	protected String defaultThemeName = null;
+	private Set<String> globalFallbackThemes = new HashSet<>();
 
 	public DefaultIconService() throws IOException, ParseException {
 		super();
@@ -65,10 +69,22 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 		IconTheme theme = getSelectedTheme();
 		if (theme == null) {
 			theme = getDefaultTheme();
+			if (theme != null) {
+				setSelectedTheme(theme);
+			}
 		}
-		if (theme != null) {
-			setSelectedTheme(theme);
-		}
+	}
+	
+	public Set<String> getGlobalFallbackThemes() {
+		return Collections.unmodifiableSet(globalFallbackThemes);
+	}
+	
+	public void addGlobalFallbackTheme(String theme) {
+		globalFallbackThemes.add(theme);
+	}
+	
+	public void removeGlobalFallbackTheme(String theme) {
+		globalFallbackThemes.add(theme);
 	}
 
 	protected IconTheme getDefaultTheme() {
@@ -127,7 +143,7 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 			}
 		}
 		try {
-			file = lookupFallbackIcon(name);
+			file = lookupFallbackIcon(name, size);
 			if (file != null) {
 				cache.put(key, file);
 				return file;
@@ -170,7 +186,7 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 			}
 		}
 		try {
-			file = lookupFallbackIcon(name);
+			file = lookupFallbackIcon(name, size);
 			if (file != null) {
 				cache.put(key, file);
 				return true;
@@ -257,7 +273,20 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 		return themes;
 	}
 
-	Path lookupFallbackIcon(String iconname) throws IOException {
+	Path lookupFallbackIcon(String iconname, int size) throws IOException {
+		
+		for (String fallback : globalFallbackThemes) {
+			IconTheme parentTheme = getEntity(fallback);
+			if (parentTheme == null) {
+				Log.debug("Fallback theme " + fallback + " specified");
+			} else {
+				Path filename = findIconHelper(iconname, size, null);
+				if (filename != null) {
+					return filename;
+				}
+			}
+		}
+		
 		for (Path base : bases.keySet()) {
 			for (String extension : SUPPORTED_EXTENSIONS) {
 				Path f = base.resolve(iconname + "." + extension);
@@ -295,6 +324,7 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 				}
 			}
 		}
+		
 		return null;
 	}
 
