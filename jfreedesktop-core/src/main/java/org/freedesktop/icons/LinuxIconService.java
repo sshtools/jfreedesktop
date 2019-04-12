@@ -46,7 +46,8 @@ public class LinuxIconService extends DefaultIconService {
 		// String selectedThemeName =
 		// getGConfValue("/desktop/gnome/interface/icon_theme", null);
 		String selectedThemeName = null;
-		if (!"true".equals(System.getProperty("jfreedesktop.alwaysUseDefaultTheme", "false"))) {
+		String property = System.getProperty("jfreedesktop.alwaysUseDefaultTheme", "false");
+		if (!"true".equals(property)) {
 			// Cinnamon
 			String cinnamon = System.getenv("CINNAMON_VERSION");
 			if (cinnamon != null) {
