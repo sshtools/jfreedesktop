@@ -98,7 +98,7 @@ public class Directory {
 					}
 				}
 			} else {
-				Log.warn(String.format("No directory %s", dirBase));
+				Log.debug(String.format("No directory %s", dirBase));
 			}
 		}
 	}
