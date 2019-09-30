@@ -30,7 +30,6 @@ import javax.swing.Icon;
 
 import com.kitfox.svg.SVGCache;
 import com.kitfox.svg.SVGDiagram;
-import com.kitfox.svg.SVGException;
 import com.kitfox.svg.SVGUniverse;
 
 public class SVGIcon implements Icon {
