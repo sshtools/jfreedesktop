@@ -94,6 +94,20 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 				return theme;
 			}
 		}
+		
+		/* Prefer to find jfreedesktop-tango */
+		for(Path base : bases.keySet()) {
+			if(base.toString().indexOf("jfreedesktop-tango") != -1)
+				return bases.get(base).iterator().next();
+		}
+		
+		/* Failing that, the  first theme base that is outside of the users home directory (i.e. a system one) */
+		for(Path base : bases.keySet()) {
+			if(!base.toString().startsWith(System.getProperty("user.home") + "/"))
+				return bases.get(base).iterator().next();
+		}
+		
+		/* Finally just the first base */
 		Path firstBase = bases.keySet().isEmpty() ? null : bases.keySet().iterator().next();
 		return firstBase == null ? null : bases.get(firstBase).iterator().next();
 	}
