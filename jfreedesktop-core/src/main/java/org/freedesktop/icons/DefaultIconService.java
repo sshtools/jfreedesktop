@@ -97,7 +97,9 @@ public class DefaultIconService extends AbstractThemeService<IconTheme> implemen
 		
 		/* Prefer to find jfreedesktop-tango */
 		for(Path base : bases.keySet()) {
-			if(base.toString().indexOf("jfreedesktop-tango") != -1)
+			String basename = base.toString();
+			String aname = base.getFileSystem().toString();
+			if(basename.indexOf("jfreedesktop-tango") != -1 || aname.indexOf("jfreedesktop-tango") != -1)
 				return bases.get(base).iterator().next();
 		}
 		
