@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
@@ -31,12 +32,10 @@ import org.freedesktop.themes.AbstractTheme;
 import org.freedesktop.util.INIFile;
 
 public class IconTheme extends AbstractTheme {
-
 	private static final String ICON_THEME = "Icon Theme";
 	private static final String DIRECTORIES = "Directories";
 	private static final String INHERITS = "Inherits";
 	private static final String HIDDEN = "Hidden";
-
 	private List<String> inherits;
 	private boolean hidden;
 	private List<Directory> directories;
@@ -61,18 +60,15 @@ public class IconTheme extends AbstractTheme {
 		return hidden;
 	}
 
-	public void initFromThemeProperties(INIFile iniFile, Properties themeProperties)
-			throws IOException, ParseException {
+	public void initFromThemeProperties(INIFile iniFile, Properties themeProperties) throws IOException, ParseException {
 		inherits = new ArrayList<String>();
-		directories = new ArrayList<Directory>();
-
+		directories = Collections.synchronizedList(new ArrayList<Directory>());
 		if (themeProperties.containsKey(INHERITS)) {
 			StringTokenizer t = new StringTokenizer(themeProperties.getProperty(INHERITS), ",");
 			while (t.hasMoreTokens()) {
 				inherits.add(t.nextToken());
 			}
 		}
-
 		if (!themeProperties.containsKey(DIRECTORIES)) {
 			if (inherits.size() == 0) {
 				throw new ParseException("Directories entry is required when no theme is inherited.", 0);
@@ -83,13 +79,12 @@ public class IconTheme extends AbstractTheme {
 				String directoryName = t.nextToken();
 				Properties directoryProperties = iniFile.get(directoryName);
 				if (directoryProperties == null) {
-					throw new ParseException(
-							"Entry '" + directoryName + "' in Directories does not have a corresponding section.", 0);
+					throw new ParseException("Entry '" + directoryName + "' in Directories does not have a corresponding section.",
+							0);
 				}
 				directories.add(new Directory(this, directoryName, directoryProperties));
 			}
 		}
-
 		hidden = "true".equalsIgnoreCase(themeProperties.getProperty(HIDDEN));
 	}
 
@@ -110,38 +105,39 @@ public class IconTheme extends AbstractTheme {
 
 	public Path lookupIcon(String icon, int size) throws IOException {
 		checkLoaded();
-		for (Directory directory : getDirectories()) {
-			if (directory.isMatchesSize(size)) {
-				Path file = directory.findIcon(icon);
-				if (file != null) {
-					return file;
+		Collection<Directory> dirs = getDirectories();
+		synchronized (dirs) {
+			for (Directory directory : dirs) {
+				if (directory.isMatchesSize(size)) {
+					Path file = directory.findIcon(icon);
+					if (file != null) {
+						return file;
+					}
 				}
 			}
-		}
-
-		int minimalSize = Integer.MAX_VALUE;
-		Path closestFile = null;
-		Path firstFile = null;
-		for (Directory directory : getDirectories()) {
-			for (String ext : DefaultIconService.SUPPORTED_EXTENSIONS) {
-				for (Path base : getBases()) {
-					Path file = base.resolve(directory.getKey() + File.separator + icon + "." + ext);
-					int directorySizeDistance = directorySizeDistance(directory, size);
-					if (Files.exists(file)) {
-						if (directorySizeDistance < minimalSize) {
-							closestFile = file;
-							minimalSize = directorySizeDistance;
-						} else {
-							if (firstFile == null) {
-								firstFile = file;
+			int minimalSize = Integer.MAX_VALUE;
+			Path closestFile = null;
+			Path firstFile = null;
+			for (Directory directory : dirs) {
+				for (String ext : DefaultIconService.SUPPORTED_EXTENSIONS) {
+					for (Path base : getBases()) {
+						Path file = base.resolve(directory.getKey() + File.separator + icon + "." + ext);
+						int directorySizeDistance = directorySizeDistance(directory, size);
+						if (Files.exists(file)) {
+							if (directorySizeDistance < minimalSize) {
+								closestFile = file;
+								minimalSize = directorySizeDistance;
+							} else {
+								if (firstFile == null) {
+									firstFile = file;
+								}
 							}
 						}
 					}
 				}
 			}
+			return closestFile == null ? firstFile : closestFile;
 		}
-
-		return closestFile == null ? firstFile : closestFile;
 	}
 
 	int directorySizeDistance(Directory directory, int iconsize) {
@@ -165,7 +161,6 @@ public class IconTheme extends AbstractTheme {
 			}
 		}
 		return 0;
-
 	}
 
 	@Override
