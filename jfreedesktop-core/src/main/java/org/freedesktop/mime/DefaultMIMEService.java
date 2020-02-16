@@ -120,7 +120,7 @@ public class DefaultMIMEService extends AbstractFreedesktopService<MIMEEntry> im
 			for (GlobEntry ge : mre.getAlternatives()) {
 				Log.debug("Trying " + ge.getInternalName());
 				MIMEEntry me = getEntity(ge.getInternalName());
-				if (me != null) {
+				if (me == null) {
 					Log.debug("NO Mime Entry for " + ge.getInternalName());
 				} else {
 					Log.debug("Will use " + me.getInternalName());
@@ -153,8 +153,8 @@ public class DefaultMIMEService extends AbstractFreedesktopService<MIMEEntry> im
 		 * binary data, or text/plain for textual data. If there was no glob
 		 * match the magic match as the result.
 		 */
-		InputStream in = Files.newInputStream(file);
-		try {
+		
+		try(InputStream in = Files.newInputStream(file)) {
 			byte[] buf = new byte[(int) Math.min(32l, Files.size(file))];
 			DataInputStream din = new DataInputStream(in);
 			din.readFully(buf);
@@ -163,9 +163,7 @@ public class DefaultMIMEService extends AbstractFreedesktopService<MIMEEntry> im
 					return getEntity("application/octet-stream");
 				}
 			}
-		} finally {
-			in.close();
-		}
+		} 
 		return getEntity("text/plain");
 	}
 

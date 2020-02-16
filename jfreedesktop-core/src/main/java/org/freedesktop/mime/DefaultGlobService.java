@@ -239,6 +239,7 @@ public class DefaultGlobService extends AbstractFreedesktopService<GlobEntry> im
 		return found;
 	}
 
+	@SuppressWarnings("unused")
 	private Collection<GlobEntry> bySimplePattern(String pattern) {
 		if (!isSimplePattern(pattern)) {
 			throw new IllegalArgumentException("Only simple patterns are cached.");
