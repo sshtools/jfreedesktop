@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="model/x3d+xml">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <sub-class-of type="text/xml"/>
+  <comment>X3D model (XML encoding)</comment>
+  <glob pattern="*.x3d"/>
+  <glob pattern="*.x3d.gz"/>
+  <glob pattern="*.x3dz"/>
+</mime-type>

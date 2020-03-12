@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="application/x-virtualbox-vbox-extpack">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <comment>VirtualBox Extension Pack</comment>
+  <comment xml:lang="en">VirtualBox Extension Pack</comment>
+  <glob pattern="*.vbox-extpack"/>
+  <icon name="virtualbox-vbox-extpack"/>
+</mime-type>

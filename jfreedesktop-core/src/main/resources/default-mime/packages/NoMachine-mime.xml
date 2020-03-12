@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="application/nx-session">
+        <comment xml:lang="en">NoMachine session</comment>
+        <magic priority="50">
+          <match value="&lt;!DOCTYPE\ NXClientSettings" type="string" offset="0"/>
+        </magic>
+        <glob pattern="*.nxs" />
+        <generic-icon name="NoMachine-desktop"/>
+     </mime-type>
+    <mime-type type="application/nx-recording">
+        <comment xml:lang="en">NoMachine recording</comment>
+        <magic priority="50">
+          <match value="&lt;!DOCTYPE\ NXPlayerRecording" type="string" offset="0"/>
+        </magic>
+        <glob pattern="*.nxv" />
+        <generic-icon name="NoMachine-recording"/>
+     </mime-type>
+
+</mime-info>

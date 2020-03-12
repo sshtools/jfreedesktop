@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="application/vnc-shortcut">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <sub-class-of type="text/plain"/>
+  <comment>VNC shortcut</comment>
+  <comment xml:lang="de">VNC-Verknüpfung</comment>
+  <comment xml:lang="es">Acceso directo a VNC</comment>
+  <comment xml:lang="fr">Raccourci VNC</comment>
+  <comment xml:lang="pt">Atalho do VNC</comment>
+  <glob pattern="*.vnc"/>
+</mime-type>

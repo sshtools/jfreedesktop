@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="application/x-virtualbox-vbox">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <comment>VirtualBox Machine Definition</comment>
+  <comment xml:lang="en">VirtualBox Machine Definition</comment>
+  <glob pattern="*.vbox"/>
+  <icon name="virtualbox-vbox"/>
+</mime-type>

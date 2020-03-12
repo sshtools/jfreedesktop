@@ -83,13 +83,13 @@ public abstract class AbstractFreedesktopService<T extends FreedesktopEntity> im
 		return reverseBases;
 	}
 
-	protected void checkAndAddBase(Path file) throws IOException, ParseException {
+	public void checkAndAddBase(Path file) throws IOException, ParseException {
 		if (Files.exists(file)) {
 			addBase(file);
 		}
 	}
 
-	protected void checkAndAddBase(File file) throws IOException, ParseException {
+	public void checkAndAddBase(File file) throws IOException, ParseException {
 		if (file.exists()) {
 			addBase(file.toPath());
 		}

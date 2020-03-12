@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="application/x-remmina">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <sub-class-of type="text/plain"/>
+  <comment>Remote Desktop (Remmina) file</comment>
+  <glob pattern="*.remmina"/>
+  <glob pattern="*.rdp"/>
+  <glob pattern="*.rdpx"/>
+  <glob pattern="*.RDP"/>
+  <icon name="remmina"/>
+</mime-type>

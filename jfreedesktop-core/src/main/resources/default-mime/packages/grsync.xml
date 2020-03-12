@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+	<mime-type type="application/x-grsync-session">
+		<!-- <sub-class-of type="text/plain"/> -->
+		<comment>Grsync session</comment>
+		<comment xml:lang="it">Sessione di Grsync</comment>
+		
+		<glob pattern="*.grsync"/>
+	</mime-type>
+</mime-info>

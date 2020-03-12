@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="model/x3d+vrml">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <sub-class-of type="text/plain"/>
+  <comment>X3D model (classic VRML encoding)</comment>
+  <glob pattern="*.x3dv"/>
+  <glob pattern="*.x3dv.gz"/>
+  <glob pattern="*.x3dvz"/>
+</mime-type>
