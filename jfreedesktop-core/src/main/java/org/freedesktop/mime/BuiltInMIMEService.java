@@ -1,5 +1,5 @@
 /**
- * Copyright © 2006 - 2018 SSHTOOLS Limited (support@sshtools.com)
+ * Copyright © 2006 - 2020 SSHTOOLS Limited (support@sshtools.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,13 +49,22 @@ public class BuiltInMIMEService extends DefaultMIMEService {
 			try {
 				obj = Util.resourceToPath(loc);
 			} catch (URISyntaxException e) {
-				e.printStackTrace();
 			}
 		}
 		if (obj != null) {
 			URI uri = obj.toUri();
+			String uriStr = uri.toString();
+			int idx = uriStr.lastIndexOf('!');
+			if (idx != -1) {
+				uriStr = uriStr.substring(idx + 1);
+				if (uriStr.endsWith("/types"))
+					uriStr = uriStr.substring(0, uriStr.length() - 6);
+			} else
+				uriStr = null;
 			if (uri.getScheme().equals("jar")) {
 				for (Path r : obj.getFileSystem().getRootDirectories()) {
+					if (uriStr != null)
+						r = r.resolve(uriStr);
 					srv.checkAndAddBase(r);
 				}
 			} else if (uri.getScheme().equals("file")) {
