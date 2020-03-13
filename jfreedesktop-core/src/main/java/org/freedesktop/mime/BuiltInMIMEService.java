@@ -52,23 +52,27 @@ public class BuiltInMIMEService extends DefaultMIMEService {
 			}
 		}
 		if (obj != null) {
-			URI uri = obj.toUri();
-			String uriStr = uri.toString();
-			int idx = uriStr.lastIndexOf('!');
-			if (idx != -1) {
-				uriStr = uriStr.substring(idx + 1);
-				if (uriStr.endsWith("/types"))
-					uriStr = uriStr.substring(0, uriStr.length() - 6);
-			} else
-				uriStr = null;
-			if (uri.getScheme().equals("jar")) {
-				for (Path r : obj.getFileSystem().getRootDirectories()) {
-					if (uriStr != null)
-						r = r.resolve(uriStr);
-					srv.checkAndAddBase(r);
+			try {
+				URI uri = obj.toUri();
+				String uriStr = uri.toString();
+				int idx = uriStr.lastIndexOf('!');
+				if (idx != -1) {
+					uriStr = uriStr.substring(idx + 1);
+					if (uriStr.endsWith("/types"))
+						uriStr = uriStr.substring(0, uriStr.length() - 6);
+				} else
+					uriStr = null;
+				if (uri.getScheme().equals("jar")) {
+					for (Path r : obj.getFileSystem().getRootDirectories()) {
+						if (uriStr != null)
+							r = r.resolve(uriStr);
+						srv.checkAndAddBase(r);
+					}
+				} else if (uri.getScheme().equals("file")) {
+					srv.checkAndAddBase(obj.getParent());
 				}
-			} else if (uri.getScheme().equals("file")) {
-				srv.checkAndAddBase(obj.getParent());
+			} finally {
+				obj.getFileSystem().close();
 			}
 		}
 	}
