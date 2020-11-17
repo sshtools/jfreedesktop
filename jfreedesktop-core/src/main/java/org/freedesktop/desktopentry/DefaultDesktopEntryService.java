@@ -29,7 +29,7 @@ import org.freedesktop.util.Log;
 import org.freedesktop.wallpapers.WallpaperService;
 
 /**
- * Default implementations of an {@link WallpaperService}.
+ * Default implementations of an {@link DesktopEntryService}.
  */
 public class DefaultDesktopEntryService extends AbstractFreedesktopService<DesktopEntry> implements DesktopEntryService {
 	protected Collection<DesktopEntry> scanBase(Path base) throws IOException {
