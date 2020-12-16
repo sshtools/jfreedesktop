@@ -13,9 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module com.sshtools.jfreedesktop.swing {
-    requires com.sshtools.jfreedesktop;
-    requires transitive java.desktop;
-	requires transitive svgSalamander;
-    exports com.sshtools.jfreedesktop.swing;
+package com.sshtools.jfreedesktop.mime;
+
+import java.io.IOException;
+import java.text.ParseException;
+
+public class BuiltInGlobService extends DefaultGlobService {
+
+	public BuiltInGlobService() throws IOException, ParseException {
+		super();
+		init();
+	}
+	
+	private void init() throws IOException, ParseException {
+		BuiltInMIMEService.addJarMimeSet(this, "default-mime");
+	}
 }

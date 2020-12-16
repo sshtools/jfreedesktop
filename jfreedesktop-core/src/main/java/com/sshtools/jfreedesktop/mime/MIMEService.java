@@ -13,9 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module com.sshtools.jfreedesktop.swing {
-    requires com.sshtools.jfreedesktop;
-    requires transitive java.desktop;
-	requires transitive svgSalamander;
-    exports com.sshtools.jfreedesktop.swing;
+package com.sshtools.jfreedesktop.mime;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Collection;
+
+import com.sshtools.jfreedesktop.FreedesktopService;
+
+public interface MIMEService extends FreedesktopService<MIMEEntry> {
+	MIMEEntry getEntryForMimeType(String mimeType);
+
+	MIMEEntry getMimeTypeForFile(Path file, boolean useMagic) throws IOException;
+
+	MIMEEntry getMimeTypeForPattern(String pattern)
+			throws MagicRequiredException;
+
+	String getDefaultExtension(MIMEEntry mimeEntry);
+
+	Collection<String> getExtensionsForMimeType(MIMEEntry mimeEntry);
+
+	AliasEntry getAliasEntryForAlias(String alias);
+
 }

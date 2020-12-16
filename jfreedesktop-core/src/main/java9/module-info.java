@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module org.freedesktop {
+module com.sshtools.jfreedesktop {
     requires transitive java.xml;
-    exports org.freedesktop;
-    exports org.freedesktop.cursors;
-    exports org.freedesktop.desktopentry;
-    exports org.freedesktop.icons;
-    exports org.freedesktop.mime;
-    exports org.freedesktop.themes;
-    exports org.freedesktop.util;
-    exports org.freedesktop.wallpapers;
+    exports com.sshtools.jfreedesktop;
+    exports com.sshtools.jfreedesktop.cursors;
+    exports com.sshtools.jfreedesktop.desktopentry;
+    exports com.sshtools.jfreedesktop.icons;
+    exports com.sshtools.jfreedesktop.mime;
+    exports com.sshtools.jfreedesktop.themes;
+    exports com.sshtools.jfreedesktop.util;
+    exports com.sshtools.jfreedesktop.wallpapers;
 }

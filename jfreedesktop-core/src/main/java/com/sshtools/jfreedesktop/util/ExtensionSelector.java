@@ -13,9 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module com.sshtools.jfreedesktop.swing {
-    requires com.sshtools.jfreedesktop;
-    requires transitive java.desktop;
-	requires transitive svgSalamander;
-    exports com.sshtools.jfreedesktop.swing;
+/**
+ * 
+ */
+package com.sshtools.jfreedesktop.util;
+
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Path;
+
+public class ExtensionSelector implements DirectoryStream.Filter<Path> {
+	private String extension;
+
+	public ExtensionSelector(String extension) {
+		this.extension = "." + extension.toLowerCase();
+	}
+
+	@Override
+	public boolean accept(Path entry) throws IOException {
+		return entry.getFileName().toString().toLowerCase().endsWith(extension);
+	}
 }

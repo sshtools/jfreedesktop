@@ -13,9 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module com.sshtools.jfreedesktop.swing {
-    requires com.sshtools.jfreedesktop;
-    requires transitive java.desktop;
-	requires transitive svgSalamander;
-    exports com.sshtools.jfreedesktop.swing;
+package com.sshtools.jfreedesktop.wallpapers;
+
+import com.sshtools.jfreedesktop.themes.ThemeService;
+
+/**
+ * Implementations of this service interface provide an easy way for Java to use
+ * the <a href="http://www.freedesktop.org/wiki/">freedesktop.org</a>'s wallpaper 
+ * themes. 
+ */
+public interface WallpaperService extends ThemeService<Wallpaper> {
 }

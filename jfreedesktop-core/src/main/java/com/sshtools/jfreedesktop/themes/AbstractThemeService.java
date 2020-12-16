@@ -13,9 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module com.sshtools.jfreedesktop.swing {
-    requires com.sshtools.jfreedesktop;
-    requires transitive java.desktop;
-	requires transitive svgSalamander;
-    exports com.sshtools.jfreedesktop.swing;
+package com.sshtools.jfreedesktop.themes;
+
+import com.sshtools.jfreedesktop.AbstractFreedesktopService;
+
+/**
+ * Abstract implementations of a {@link ThemeService} that provides methods
+ * for maintaining the list of base directories (common to all themes). 
+ */
+public abstract class AbstractThemeService<T extends Theme> extends AbstractFreedesktopService<T> implements ThemeService<T> {
+
+
+    // Private instance variables
+    private T theme;
+
+    public T getSelectedTheme() {
+        return theme;
+    }
+
+    public void setSelectedTheme(T theme) {
+        this.theme = theme;
+    }
+
 }

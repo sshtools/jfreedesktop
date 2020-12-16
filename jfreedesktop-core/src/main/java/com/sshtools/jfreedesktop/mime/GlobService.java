@@ -13,9 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module com.sshtools.jfreedesktop.swing {
-    requires com.sshtools.jfreedesktop;
-    requires transitive java.desktop;
-	requires transitive svgSalamander;
-    exports com.sshtools.jfreedesktop.swing;
+package com.sshtools.jfreedesktop.mime;
+
+import com.sshtools.jfreedesktop.FreedesktopService;
+
+public interface GlobService extends FreedesktopService<GlobEntry> {
+    public GlobEntry match(String pattern) throws MagicRequiredException;
+    public GlobEntry getByMimeType(String mimeType);
+
 }

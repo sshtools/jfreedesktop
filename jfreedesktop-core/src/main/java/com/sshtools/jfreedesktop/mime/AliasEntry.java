@@ -13,9 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module com.sshtools.jfreedesktop.swing {
-    requires com.sshtools.jfreedesktop;
-    requires transitive java.desktop;
-	requires transitive svgSalamander;
-    exports com.sshtools.jfreedesktop.swing;
+package com.sshtools.jfreedesktop.mime;
+
+import com.sshtools.jfreedesktop.FreedesktopEntity;
+
+/**
+ * Represents a single <strong>alias</strong> as described in the <a href=
+ * "http://standards.freedesktop.org/shared-mime-info-spec/shared-mime-info-spec-latest.html">Shared
+ * MIME-info Database Specification</a>
+ */
+public class AliasEntry implements FreedesktopEntity {
+	private String name;
+	private String alias;
+
+	public AliasEntry(String name, String alias) {
+		this.name = name;
+		this.alias = alias;
+	}
+
+	public String getAlias() {
+		return alias;
+	}
+
+	public String getInternalName() {
+		return name;
+	}
 }

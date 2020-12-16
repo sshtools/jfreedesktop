@@ -13,9 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module com.sshtools.jfreedesktop.swing {
-    requires com.sshtools.jfreedesktop;
-    requires transitive java.desktop;
-	requires transitive svgSalamander;
-    exports com.sshtools.jfreedesktop.swing;
+package com.sshtools.jfreedesktop.wallpapers;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
+
+/**
+ * Extension of {@link DefaultWallpaperService} that could be used on a Linux
+ * system. Adds <i>/usr/share/wallpapers</i> as a default base directory.
+ * <p>
+ * Tested on Ubuntu 8.04 LTS.
+ */
+public class LinuxWallpaperService extends DefaultWallpaperService {
+
+    public LinuxWallpaperService() throws IOException, ParseException {
+        checkAndAddBase(new File("/usr/share/wallpapers"));
+    }
 }
