@@ -1,6 +1,6 @@
 <!--
 
-    Copyright © 2006 - 2020 SSHTOOLS Limited (support@sshtools.com)
+    Copyright © 2006 - 2021 SSHTOOLS Limited (support@sshtools.com)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
 	<parent>
 		<groupId>com.sshtools</groupId>
 		<artifactId>jfreedesktop</artifactId>
-		<version>3.0.0</version>
+		<version>3.0.1-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<packaging>jar</packaging>
