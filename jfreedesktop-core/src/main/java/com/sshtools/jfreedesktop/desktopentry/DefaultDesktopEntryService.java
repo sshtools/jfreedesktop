@@ -26,7 +26,6 @@ import java.util.List;
 
 import com.sshtools.jfreedesktop.AbstractFreedesktopService;
 import com.sshtools.jfreedesktop.util.Log;
-import com.sshtools.jfreedesktop.wallpapers.WallpaperService;
 
 /**
  * Default implementations of an {@link DesktopEntryService}.
