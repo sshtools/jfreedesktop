@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright © 2006 - 2020 SSHTOOLS Limited (support@sshtools.com)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="application/x-xliff">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <comment>XLIFF translation file</comment>
+  <comment xml:lang="ar">ملف ترجمة XLIFF</comment>
+  <comment xml:lang="be@latin">Fajł pierakładu XLIFF</comment>
+  <comment xml:lang="bg">Превод — XLIFF</comment>
+  <comment xml:lang="ca">fitxer de traducció XLIFF</comment>
+  <comment xml:lang="cs">soubor překladu XLIFF</comment>
+  <comment xml:lang="da">XLIFF-oversættelsesfil</comment>
+  <comment xml:lang="de">XLIFF-Übersetzung</comment>
+  <comment xml:lang="el">Αρχείο μετάφρασης XLIFF</comment>
+  <comment xml:lang="en_GB">XLIFF translation file</comment>
+  <comment xml:lang="es">archivo de traducción XLIFF</comment>
+  <comment xml:lang="eu">XLIFF itzulpen-fitxategia</comment>
+  <comment xml:lang="fi">XLIFF-käännöstiedosto</comment>
+  <comment xml:lang="fo">XLIFF týðingarfíla</comment>
+  <comment xml:lang="fr">fichier de traduction XLIFF</comment>
+  <comment xml:lang="ga">comhad aistriúcháin XLIFF</comment>
+  <comment xml:lang="gl">ficheiro de tradución XLIFF</comment>
+  <comment xml:lang="he">קובץ תרגום CLIFF</comment>
+  <comment xml:lang="hr">XLIFF datoteka prijevoda</comment>
+  <comment xml:lang="hu">XLIFF fordítási fájl</comment>
+  <comment xml:lang="ia">File de traduction XLIFF</comment>
+  <comment xml:lang="id">Berkas terjemahan XLIFF</comment>
+  <comment xml:lang="it">File traduzione XLIFF</comment>
+  <comment xml:lang="ja">XLIFF 翻訳ファイル</comment>
+  <comment xml:lang="kk">XLIFF аударма файлы</comment>
+  <comment xml:lang="ko">XLIFF 번역 파일</comment>
+  <comment xml:lang="lt">XLIFF vertimo failas</comment>
+  <comment xml:lang="lv">XLIFF tulkošanas datne</comment>
+  <comment xml:lang="nb">XLIFF-oversettelsesfil</comment>
+  <comment xml:lang="nl">XLIFF-vertalingsbestand</comment>
+  <comment xml:lang="nn">XLIFF-omsetjingsfil</comment>
+  <comment xml:lang="oc">fichièr de traduccion XLIFF</comment>
+  <comment xml:lang="pl">Plik tłumaczenia XLIFF</comment>
+  <comment xml:lang="pt">ficheiro de tradução XLIFF</comment>
+  <comment xml:lang="pt_BR">Arquivo de tradução XLIFF</comment>
+  <comment xml:lang="ro">Fișier de traducere XLIFF</comment>
+  <comment xml:lang="ru">Файл перевода XLIFF</comment>
+  <comment xml:lang="sk">Súbor prekladu XLIFF</comment>
+  <comment xml:lang="sl">Datoteka prevoda XLIFF</comment>
+  <comment xml:lang="sq">File përkthimesh XLIFF</comment>
+  <comment xml:lang="sr">ИксЛИФФ датотека превода</comment>
+  <comment xml:lang="sv">XLIFF-översättningsfil</comment>
+  <comment xml:lang="tr">XLIFF çeviri dosyası</comment>
+  <comment xml:lang="uk">файл перекладу XLIFF</comment>
+  <comment xml:lang="vi">Tập tin dịch XLIFF</comment>
+  <comment xml:lang="zh_CN">XLIFF 翻译文件</comment>
+  <comment xml:lang="zh_TW">XLIFF 翻譯檔</comment>
+  <acronym>XLIFF</acronym>
+  <expanded-acronym>XML Localization Interchange File Format</expanded-acronym>
+  <sub-class-of type="application/xml"/>
+  <generic-icon name="text-x-generic"/>
+  <glob pattern="*.xlf"/>
+  <glob pattern="*.xliff"/>
+</mime-type>

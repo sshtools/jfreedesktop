@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright © 2006 - 2020 SSHTOOLS Limited (support@sshtools.com)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="application/vnd.kde.kcfg">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <comment>KConfigXT Configuration Options</comment>
+  <comment xml:lang="ca">Opcions de configuració del KConfigXT</comment>
+  <comment xml:lang="ca@valencia">Opcions de configuració del KConfigXT</comment>
+  <comment xml:lang="da">Konfigurationsmuligheder til KConfigXT</comment>
+  <comment xml:lang="de">KConfigXT-Einrichtungsoptionen</comment>
+  <comment xml:lang="en_GB">KConfigXT Configuration Options</comment>
+  <comment xml:lang="es">Opciones de configuración de KConfigXT</comment>
+  <comment xml:lang="fi">KConfigXT Configuration Options</comment>
+  <comment xml:lang="fr">Options de configuration de KConfigXT</comment>
+  <comment xml:lang="gl">Opcións de configuración de KConfigXT</comment>
+  <comment xml:lang="id">Opsi Konfigurasi KConfigXT</comment>
+  <comment xml:lang="it">Opzioni di configurazione KConfigXT</comment>
+  <comment xml:lang="ko">KConfigXT 설정 옵션</comment>
+  <comment xml:lang="nl">Configuratie-opties van KConfigXT</comment>
+  <comment xml:lang="nn">KConfigXT-oppsett</comment>
+  <comment xml:lang="pl">Opcje KConfigXT</comment>
+  <comment xml:lang="pt">Opções de Configuração do KConfigXT</comment>
+  <comment xml:lang="pt_BR">Opções de configuração do KConfigXT</comment>
+  <comment xml:lang="ru">параметры конфигурации KConfigXT</comment>
+  <comment xml:lang="sl">Nastavitvene možnosti KConfigXT</comment>
+  <comment xml:lang="sr">поставне опције К‑конфиг‑ИксТ‑а</comment>
+  <comment xml:lang="sr@ijekavian">поставне опције К‑конфиг‑ИксТ‑а</comment>
+  <comment xml:lang="sr@ijekavianlatin">postavne opcije KConfigXT‑a</comment>
+  <comment xml:lang="sr@latin">postavne opcije KConfigXT‑a</comment>
+  <comment xml:lang="sv">KConfigXT-inställningsalternativ</comment>
+  <comment xml:lang="uk">параметри налаштування KConfigXT</comment>
+  <comment xml:lang="zh_CN">KConfigXT 配置选项</comment>
+  <comment xml:lang="zh_TW">KConfigXT 設定選項</comment>
+  <generic-icon name="application-xml"/>
+  <sub-class-of type="application/xml"/>
+  <glob pattern="*.kcfg"/>
+</mime-type>

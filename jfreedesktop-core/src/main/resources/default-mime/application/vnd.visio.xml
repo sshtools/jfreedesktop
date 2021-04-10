@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright © 2006 - 2020 SSHTOOLS Limited (support@sshtools.com)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="application/vnd.visio">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <comment>Microsoft Visio document</comment>
+  <comment xml:lang="ast">Documentu de Microsoft Visio</comment>
+  <comment xml:lang="bg">Документ — Microsoft Visio</comment>
+  <comment xml:lang="ca">document de Microsoft Visio</comment>
+  <comment xml:lang="cs">dokument Microsoft Visio</comment>
+  <comment xml:lang="da">Microsoft Visio-dokument</comment>
+  <comment xml:lang="de">Microsoft-Visio-Dokument</comment>
+  <comment xml:lang="el">Έγγραφο Microsoft Visio</comment>
+  <comment xml:lang="en_GB">Microsoft Visio document</comment>
+  <comment xml:lang="es">documento de Microsoft Visio</comment>
+  <comment xml:lang="eu">Microsoft Visio dokumentua</comment>
+  <comment xml:lang="fi">Microsoft Visio -asiakirja</comment>
+  <comment xml:lang="fr">document Microsoft Visio</comment>
+  <comment xml:lang="ga">cáipéis Microsoft Visio</comment>
+  <comment xml:lang="gl">Documento de Microsoft Visio</comment>
+  <comment xml:lang="he">מסמך </comment>
+  <comment xml:lang="hr">Microsoft Visio dokument</comment>
+  <comment xml:lang="hu">Microsoft Visio dokumentum</comment>
+  <comment xml:lang="ia">Documento Microsoft Visio</comment>
+  <comment xml:lang="id">Dokumen Microsoft Visio</comment>
+  <comment xml:lang="it">Documento Microsoft Visio</comment>
+  <comment xml:lang="ja">Microsoft Visio ドキュメント</comment>
+  <comment xml:lang="ka">Microsoft Visio-ის დოკუმენტი</comment>
+  <comment xml:lang="kk">Microsoft Visio құжаты</comment>
+  <comment xml:lang="ko">Microsoft Visio 문서</comment>
+  <comment xml:lang="lv">Microsoft Visio dokuments</comment>
+  <comment xml:lang="nl">Microsoft Visio document</comment>
+  <comment xml:lang="oc">document Microsoft Visio</comment>
+  <comment xml:lang="pl">Dokument Microsoft Visio</comment>
+  <comment xml:lang="pt">documento Microsoft Visio</comment>
+  <comment xml:lang="pt_BR">Documento do Microsoft Visio</comment>
+  <comment xml:lang="ru">Документ Microsoft Visio</comment>
+  <comment xml:lang="sk">Dokument Microsoft Visio</comment>
+  <comment xml:lang="sl">Dokument Microsoft Visio</comment>
+  <comment xml:lang="sr">документ Мајкрософт Визиа</comment>
+  <comment xml:lang="sv">Microsoft Visio-dokument</comment>
+  <comment xml:lang="tr">Microsoft Visio belgesi</comment>
+  <comment xml:lang="uk">документ Microsoft Visio</comment>
+  <comment xml:lang="zh_CN">Microsoft Visio 文档</comment>
+  <comment xml:lang="zh_TW">Microsoft Visio文件</comment>
+  <sub-class-of type="application/x-ole-storage"/>
+  <generic-icon name="x-office-document"/>
+  <glob pattern="*.vsd"/>
+  <glob pattern="*.vst"/>
+  <glob pattern="*.vsw"/>
+  <glob pattern="*.vss"/>
+</mime-type>

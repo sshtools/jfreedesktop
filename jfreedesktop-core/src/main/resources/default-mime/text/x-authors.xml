@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright © 2006 - 2020 SSHTOOLS Limited (support@sshtools.com)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="text/x-authors">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <comment>author list</comment>
+  <comment xml:lang="ar">لائحة المؤلف</comment>
+  <comment xml:lang="be@latin">śpis aŭtaraŭ</comment>
+  <comment xml:lang="bg">Списък на авторите</comment>
+  <comment xml:lang="ca">llista d'autors</comment>
+  <comment xml:lang="cs">seznam autorů</comment>
+  <comment xml:lang="da">forfatterliste</comment>
+  <comment xml:lang="de">Autorenliste</comment>
+  <comment xml:lang="el">Κατάλογος συγγραφέων</comment>
+  <comment xml:lang="en_GB">author list</comment>
+  <comment xml:lang="eo">listo de aŭtoroj</comment>
+  <comment xml:lang="es">lista de autores</comment>
+  <comment xml:lang="eu">egile-zerrenda</comment>
+  <comment xml:lang="fi">tekijäluettelo</comment>
+  <comment xml:lang="fo">høvundalisti</comment>
+  <comment xml:lang="fr">liste d'auteurs</comment>
+  <comment xml:lang="ga">liosta údar</comment>
+  <comment xml:lang="gl">lista de autores</comment>
+  <comment xml:lang="he">רשימת יוצרים</comment>
+  <comment xml:lang="hr">Popis autora</comment>
+  <comment xml:lang="hu">szerzőlista</comment>
+  <comment xml:lang="ia">Lista de autores</comment>
+  <comment xml:lang="id">senarai penulis</comment>
+  <comment xml:lang="it">Elenco autori</comment>
+  <comment xml:lang="ja">著者リスト</comment>
+  <comment xml:lang="kk">авторлар тізімі</comment>
+  <comment xml:lang="ko">저자 목록</comment>
+  <comment xml:lang="lt">autorių sąrašas</comment>
+  <comment xml:lang="lv">autoru saraksts</comment>
+  <comment xml:lang="ms">Senarai penulis</comment>
+  <comment xml:lang="nb">forfatterliste</comment>
+  <comment xml:lang="nl">auteurslijst</comment>
+  <comment xml:lang="nn">forfattarliste</comment>
+  <comment xml:lang="oc">lista d'autors</comment>
+  <comment xml:lang="pl">Lista autorów</comment>
+  <comment xml:lang="pt">lista de autores</comment>
+  <comment xml:lang="pt_BR">Lista de autores</comment>
+  <comment xml:lang="ro">listă autori</comment>
+  <comment xml:lang="ru">Список авторов</comment>
+  <comment xml:lang="sk">Zoznam autorov</comment>
+  <comment xml:lang="sl">seznam avtorjev</comment>
+  <comment xml:lang="sq">Lista e autorëve</comment>
+  <comment xml:lang="sr">списак аутора</comment>
+  <comment xml:lang="sv">författarlista</comment>
+  <comment xml:lang="tr">yazar listesi</comment>
+  <comment xml:lang="uk">перелік авторів</comment>
+  <comment xml:lang="vi">danh sách tác giả</comment>
+  <comment xml:lang="zh_CN">作者列表</comment>
+  <comment xml:lang="zh_TW">作者清單</comment>
+  <sub-class-of type="text/plain"/>
+  <glob pattern="AUTHORS"/>
+</mime-type>

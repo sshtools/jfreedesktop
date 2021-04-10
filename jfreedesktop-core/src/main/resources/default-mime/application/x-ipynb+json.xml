@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright © 2006 - 2020 SSHTOOLS Limited (support@sshtools.com)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="application/x-ipynb+json">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <comment>Jupyter Notebook</comment>
+  <comment xml:lang="ca">llibreta de notes de Jupyter</comment>
+  <comment xml:lang="cs">sešit Jupyter</comment>
+  <comment xml:lang="da">Jupyter Notebook</comment>
+  <comment xml:lang="de">Jupyter-Dokument</comment>
+  <comment xml:lang="es">libreta de Jupyter</comment>
+  <comment xml:lang="eu">Jupyter Notebook</comment>
+  <comment xml:lang="fr">carnet de notes Jupyter</comment>
+  <comment xml:lang="ga">Leabhar nótaí Jupyter</comment>
+  <comment xml:lang="he">מחברת Jupyter</comment>
+  <comment xml:lang="hr">Jupyter bilježnica</comment>
+  <comment xml:lang="hu">Jupyter notesz</comment>
+  <comment xml:lang="id">Notebook Jupyter</comment>
+  <comment xml:lang="it">Notebook Jupyter</comment>
+  <comment xml:lang="kk">Jupyter Notebook</comment>
+  <comment xml:lang="ko">Jupyter 노트북</comment>
+  <comment xml:lang="pl">Notatnik Jupyter</comment>
+  <comment xml:lang="pt_BR">Bloco de Notas Jupyter</comment>
+  <comment xml:lang="ru">Jupyter Notebook</comment>
+  <comment xml:lang="sk">Zošit programu Jupyter</comment>
+  <comment xml:lang="sr">Џупитер бележница</comment>
+  <comment xml:lang="sv">Jupyter Notebook-dokument</comment>
+  <comment xml:lang="tr">Jupyter Notebook</comment>
+  <comment xml:lang="uk">записник Jupyter</comment>
+  <comment xml:lang="zh_CN">Jupyter 笔记本</comment>
+  <comment xml:lang="zh_TW">Jupyter 記事本</comment>
+  <sub-class-of type="application/json"/>
+  <generic-icon name="x-office-document"/>
+  <glob pattern="*.ipynb"/>
+</mime-type>

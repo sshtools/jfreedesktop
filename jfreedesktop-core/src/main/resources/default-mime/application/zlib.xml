@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright © 2006 - 2020 SSHTOOLS Limited (support@sshtools.com)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="application/zlib">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <comment>Zlib archive</comment>
+  <comment xml:lang="ca">arxiu Zlib</comment>
+  <comment xml:lang="cs">archiv Zlib</comment>
+  <comment xml:lang="da">Zlib-arkiv</comment>
+  <comment xml:lang="de">Zlib-Archiv</comment>
+  <comment xml:lang="el">Συμπιεσμένο αρχείο Zlib</comment>
+  <comment xml:lang="en_GB">Zlib archive</comment>
+  <comment xml:lang="es">archivador Zlib</comment>
+  <comment xml:lang="eu">Zlib artxiboa</comment>
+  <comment xml:lang="fi">Zlib-arkisto</comment>
+  <comment xml:lang="fr">Archive Zlib</comment>
+  <comment xml:lang="ga">cartlann Zlib</comment>
+  <comment xml:lang="gl">Arquivo Zlib</comment>
+  <comment xml:lang="he">ארכיון Zlib</comment>
+  <comment xml:lang="hr">Zlib arhiva</comment>
+  <comment xml:lang="hu">Zlib archívum</comment>
+  <comment xml:lang="ia">Archivo Zlib</comment>
+  <comment xml:lang="id">Arsip Zlib</comment>
+  <comment xml:lang="it">Archivio zlib</comment>
+  <comment xml:lang="kk">Zlib архиві</comment>
+  <comment xml:lang="ko">Zlib 압축 파일</comment>
+  <comment xml:lang="oc">Archiu Zlib</comment>
+  <comment xml:lang="pl">Archiwum Zlib</comment>
+  <comment xml:lang="pt">arquivo Zlib</comment>
+  <comment xml:lang="pt_BR">Pacote Zlib</comment>
+  <comment xml:lang="ru">Архив Zlib</comment>
+  <comment xml:lang="sk">Archív Zlib</comment>
+  <comment xml:lang="sl">Datoteka arhiva Zlib</comment>
+  <comment xml:lang="sr">Злиб архива</comment>
+  <comment xml:lang="sv">Zlib-arkiv</comment>
+  <comment xml:lang="tr">Zlib arşivi</comment>
+  <comment xml:lang="uk">архів zlib</comment>
+  <comment xml:lang="zh_CN">Alzip 归档文件</comment>
+  <comment xml:lang="zh_TW">Zlib 封存檔</comment>
+  <generic-icon name="package-x-generic"/>
+  <glob pattern="*.zz"/>
+</mime-type>

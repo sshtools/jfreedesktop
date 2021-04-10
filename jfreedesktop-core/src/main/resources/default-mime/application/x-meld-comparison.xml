@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright © 2006 - 2020 SSHTOOLS Limited (support@sshtools.com)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="application/x-meld-comparison">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <comment>Meld comparison description</comment>
+  <comment xml:lang="bs">Meld opis usporedbe</comment>
+  <comment xml:lang="ca">Descripció de la comparació del Meld</comment>
+  <comment xml:lang="ca@valencia">Descripció de la comparació del Meld</comment>
+  <comment xml:lang="cs">Definice porovnávání Meld</comment>
+  <comment xml:lang="da">Meld-sammenligningsbeskrivelse</comment>
+  <comment xml:lang="de">Meld Vergleichsbeschreibung</comment>
+  <comment xml:lang="el">Περιγραφή σύγκρισης Meld</comment>
+  <comment xml:lang="es">Descripción de la comparación de Meld</comment>
+  <comment xml:lang="eu">Meld-en konparazioaren azalpena</comment>
+  <comment xml:lang="fi">Meld-vertailun kuvaus</comment>
+  <comment xml:lang="fr">Description de la comparaison Meld</comment>
+  <comment xml:lang="gl">Descrición da comparación do Meld</comment>
+  <comment xml:lang="he">תיאור ההשוואה</comment>
+  <comment xml:lang="hu">Meld összehasonlítás-leírás</comment>
+  <comment xml:lang="id">Deskripsi perbandingan Meld</comment>
+  <comment xml:lang="it">Descrizione confronto Meld</comment>
+  <comment xml:lang="pl">Opis porównywania programu Meld</comment>
+  <comment xml:lang="pt">Descrição da comparação do Meld</comment>
+  <comment xml:lang="pt_BR">Descrição da comparação do Meld</comment>
+  <comment xml:lang="ru">Описание сравнения Meld</comment>
+  <comment xml:lang="sk">Popis porovnávania Meld</comment>
+  <comment xml:lang="sl">Opis primerjave Meld</comment>
+  <comment xml:lang="sr">Опис Мелдовог поређења</comment>
+  <comment xml:lang="sr@latin">Opis Meldovog poređenja</comment>
+  <comment xml:lang="sv">Meld jämförelsebeskrivning</comment>
+  <comment xml:lang="tr">Meld karşılaştırma açıklaması</comment>
+  <comment xml:lang="zh_CN">Meld 比较描述</comment>
+  <comment xml:lang="zh_TW">Meld 比對描述</comment>
+  <glob pattern="*.meldcmp"/>
+  <icon name="meld"/>
+</mime-type>

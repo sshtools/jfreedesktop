@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright © 2006 - 2020 SSHTOOLS Limited (support@sshtools.com)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="text/x-dbus-service">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <comment>D-Bus service file</comment>
+  <comment xml:lang="ca">fitxer de servei de D-Bus</comment>
+  <comment xml:lang="cs">soubor služby D-Bus</comment>
+  <comment xml:lang="de">D-Bus-Dienstdatei</comment>
+  <comment xml:lang="es">archivo de servicio de D-Bus</comment>
+  <comment xml:lang="eu">D-Bus zerbitzu fitxategia</comment>
+  <comment xml:lang="fi">D-Bus-palvelutiedosto</comment>
+  <comment xml:lang="fr">fichier de service D-Bus</comment>
+  <comment xml:lang="ga">comhad seirbhíse D-Bus</comment>
+  <comment xml:lang="hr">Datoteka D-Bus usluge</comment>
+  <comment xml:lang="hu">D-Bus szolgáltatás fájl</comment>
+  <comment xml:lang="id">berkas layanan D-Bus</comment>
+  <comment xml:lang="it">File servizio D-Bus</comment>
+  <comment xml:lang="kk">D-Bus қызметтік файлы</comment>
+  <comment xml:lang="ko">D-Bus 서비스 파일</comment>
+  <comment xml:lang="pl">Plik usługi D-Bus</comment>
+  <comment xml:lang="pt_BR">Arquivo do serviço D-Bus</comment>
+  <comment xml:lang="ru">Файл службы D-Bus</comment>
+  <comment xml:lang="sk">Súbor služby D-Bus</comment>
+  <comment xml:lang="sr">датотека услуге Д-сабирнице</comment>
+  <comment xml:lang="sv">D-BUS-tjänstfil</comment>
+  <comment xml:lang="tr">D-Bus hizmeti dosyası</comment>
+  <comment xml:lang="uk">файл служби D-Bus</comment>
+  <comment xml:lang="zh_CN">D-Bus 服务文件</comment>
+  <comment xml:lang="zh_TW">D-Bus 服務檔</comment>
+  <sub-class-of type="text/plain"/>
+  <glob pattern="*.service"/>
+</mime-type>

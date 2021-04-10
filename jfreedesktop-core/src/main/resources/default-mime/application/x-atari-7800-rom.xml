@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright © 2006 - 2020 SSHTOOLS Limited (support@sshtools.com)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="application/x-atari-7800-rom">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <comment>Atari 7800</comment>
+  <comment xml:lang="ast">Atari 7800</comment>
+  <comment xml:lang="ca">Atari 7800</comment>
+  <comment xml:lang="cs">Atari 7800</comment>
+  <comment xml:lang="da">Atari 7800</comment>
+  <comment xml:lang="de">Atari 7800</comment>
+  <comment xml:lang="es">Atari 7800</comment>
+  <comment xml:lang="eu">Atari 7800</comment>
+  <comment xml:lang="fi">Atari 7800</comment>
+  <comment xml:lang="fr">Atari 7800</comment>
+  <comment xml:lang="ga">Atari 7800</comment>
+  <comment xml:lang="he">אטארי 7800</comment>
+  <comment xml:lang="hr">Atari 7800</comment>
+  <comment xml:lang="hu">Atari 7800</comment>
+  <comment xml:lang="id">Atari 7800</comment>
+  <comment xml:lang="it">Atari 7800</comment>
+  <comment xml:lang="kk">Atari 7800</comment>
+  <comment xml:lang="ko">Atari 7800</comment>
+  <comment xml:lang="oc">Atari 7800</comment>
+  <comment xml:lang="pl">Atari 7800</comment>
+  <comment xml:lang="pt_BR">Atari 7800</comment>
+  <comment xml:lang="ru">Atari 7800</comment>
+  <comment xml:lang="sk">Atari 7800</comment>
+  <comment xml:lang="sr">Атари 7800</comment>
+  <comment xml:lang="sv">Atari 7800</comment>
+  <comment xml:lang="tr">Atari 7800</comment>
+  <comment xml:lang="uk">Atari 7800</comment>
+  <comment xml:lang="zh_CN">雅达利 7800</comment>
+  <comment xml:lang="zh_TW">Atari 7800</comment>
+  <generic-icon name="application-x-executable"/>
+  <glob pattern="*.a78"/>
+</mime-type>

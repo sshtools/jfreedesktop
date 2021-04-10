@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright © 2006 - 2020 SSHTOOLS Limited (support@sshtools.com)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="application/jrd+json">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <comment>JRD document</comment>
+  <comment xml:lang="ast">Documentu JRD</comment>
+  <comment xml:lang="ca">document JRD</comment>
+  <comment xml:lang="cs">dokument JRD</comment>
+  <comment xml:lang="da">JRD-dokument</comment>
+  <comment xml:lang="de">JRD-Dokument</comment>
+  <comment xml:lang="el">Έγγραφο JRD</comment>
+  <comment xml:lang="en_GB">JRD document</comment>
+  <comment xml:lang="es">documento JRD</comment>
+  <comment xml:lang="eu">JRD dokumentua</comment>
+  <comment xml:lang="fi">JRD-asiakirja</comment>
+  <comment xml:lang="fr">document JRD</comment>
+  <comment xml:lang="ga">cáipéis JRD</comment>
+  <comment xml:lang="he">מסמך JRD</comment>
+  <comment xml:lang="hr">JRD dokument</comment>
+  <comment xml:lang="hu">JRD dokumentum</comment>
+  <comment xml:lang="ia">Documento JRD</comment>
+  <comment xml:lang="id">Dokumen JRD</comment>
+  <comment xml:lang="it">Documento JRD</comment>
+  <comment xml:lang="kk">JRD құжаты</comment>
+  <comment xml:lang="ko">JRD 문서</comment>
+  <comment xml:lang="oc">document JRD</comment>
+  <comment xml:lang="pl">Dokument JRD</comment>
+  <comment xml:lang="pt">doxumento JRD</comment>
+  <comment xml:lang="pt_BR">Documento JRD</comment>
+  <comment xml:lang="ru">Документ JRD</comment>
+  <comment xml:lang="sk">Dokument JRD</comment>
+  <comment xml:lang="sr">ЈРД документ</comment>
+  <comment xml:lang="sv">JRD-dokument</comment>
+  <comment xml:lang="tr">JRD belgesi</comment>
+  <comment xml:lang="uk">документ JRD</comment>
+  <comment xml:lang="zh_CN">JRD 文档</comment>
+  <comment xml:lang="zh_TW">JRD 文件</comment>
+  <acronym>JRD</acronym>
+  <expanded-acronym>JSON Resource Descriptor</expanded-acronym>
+  <sub-class-of type="application/json"/>
+  <generic-icon name="text-x-script"/>
+  <glob pattern="*.jrd"/>
+</mime-type>

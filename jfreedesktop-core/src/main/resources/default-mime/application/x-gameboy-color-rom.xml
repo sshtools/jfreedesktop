@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright © 2006 - 2020 SSHTOOLS Limited (support@sshtools.com)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="application/x-gameboy-color-rom">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <comment>Game Boy Color ROM</comment>
+  <comment xml:lang="ca">ROM de Game Boy Color</comment>
+  <comment xml:lang="cs">ROM pro Game Boy Color</comment>
+  <comment xml:lang="da">Game Boy Color ROM</comment>
+  <comment xml:lang="de">Game Boy Color ROM</comment>
+  <comment xml:lang="es">ROM de Game Boy Color</comment>
+  <comment xml:lang="eu">Game Boy Color ROM</comment>
+  <comment xml:lang="fi">Game Boy Color -ROM</comment>
+  <comment xml:lang="fr">ROM Game Boy Color</comment>
+  <comment xml:lang="ga">ROM Game Boy Color</comment>
+  <comment xml:lang="he">ROM של Game Boy Color</comment>
+  <comment xml:lang="hr">Game Boy Color ROM</comment>
+  <comment xml:lang="hu">Game Boy Color ROM</comment>
+  <comment xml:lang="id">ROM Game Boy Color</comment>
+  <comment xml:lang="it">ROM Game Boy Color</comment>
+  <comment xml:lang="kk">Game Boy Color ROM</comment>
+  <comment xml:lang="ko">게임보이 컬러 롬</comment>
+  <comment xml:lang="pl">Plik ROM konsoli Game Boy Color</comment>
+  <comment xml:lang="pt_BR">ROM de Game Boy Color</comment>
+  <comment xml:lang="ru">Game Boy Color ROM</comment>
+  <comment xml:lang="sk">ROM pre Game Boy Color</comment>
+  <comment xml:lang="sr">Гејм Бој РОМ боје</comment>
+  <comment xml:lang="sv">Game Boy Color-rom</comment>
+  <comment xml:lang="tr">Game Boy Color ROM</comment>
+  <comment xml:lang="uk">ППП Game Boy Color</comment>
+  <comment xml:lang="zh_CN">Game Boy Color ROM</comment>
+  <comment xml:lang="zh_TW">Game Boy Color ROM</comment>
+  <generic-icon name="application-x-executable"/>
+  <glob pattern="*.gbc"/>
+  <glob pattern="*.cgb"/>
+</mime-type>

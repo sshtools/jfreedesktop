@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright © 2006 - 2020 SSHTOOLS Limited (support@sshtools.com)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="application/x-qpress">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <comment>Qpress archive</comment>
+  <comment xml:lang="ca">arxiu Qpress</comment>
+  <comment xml:lang="cs">archiv Qpress</comment>
+  <comment xml:lang="da">Qpress-arkiv</comment>
+  <comment xml:lang="de">Qpress-Archiv</comment>
+  <comment xml:lang="el">Συμπιεσμένο αρχείο Qpress</comment>
+  <comment xml:lang="en_GB">Qpress archive</comment>
+  <comment xml:lang="es">archivador de Qpress</comment>
+  <comment xml:lang="eu">Qpress artxiboa</comment>
+  <comment xml:lang="fi">Qpress-arkisto</comment>
+  <comment xml:lang="fr">Archive Qpress</comment>
+  <comment xml:lang="ga">cartlann Qpress</comment>
+  <comment xml:lang="gl">Arquivo Qpress</comment>
+  <comment xml:lang="he">ארכיון Qpress</comment>
+  <comment xml:lang="hr">Qpress arhiva</comment>
+  <comment xml:lang="hu">Qpress archívum</comment>
+  <comment xml:lang="ia">Archivo Qpress</comment>
+  <comment xml:lang="id">Arsip Qpress</comment>
+  <comment xml:lang="it">Archivio Qpress</comment>
+  <comment xml:lang="kk">Qpress архиві</comment>
+  <comment xml:lang="ko">Qpress 압축 파일</comment>
+  <comment xml:lang="oc">Archiu Qpress</comment>
+  <comment xml:lang="pl">Archiwum Qpress</comment>
+  <comment xml:lang="pt">arquivo Qpress</comment>
+  <comment xml:lang="pt_BR">Pacote Qpress</comment>
+  <comment xml:lang="ru">Архив Qpress</comment>
+  <comment xml:lang="sk">Archív Qpress</comment>
+  <comment xml:lang="sl">Datoteka arhiva Qpress</comment>
+  <comment xml:lang="sr">Купрес архива</comment>
+  <comment xml:lang="sv">Qpress-arkiv</comment>
+  <comment xml:lang="tr">Qpress arşivi</comment>
+  <comment xml:lang="uk">архів Qpress</comment>
+  <comment xml:lang="zh_CN">Qpress 归档文件</comment>
+  <comment xml:lang="zh_TW">Qpress 封存檔</comment>
+  <generic-icon name="package-x-generic"/>
+  <glob pattern="*.qp"/>
+</mime-type>
