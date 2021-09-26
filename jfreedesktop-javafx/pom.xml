@@ -74,7 +74,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>compile-java-8</id>
+						<id>default-compile</id>
 						<goals>
 							<goal>compile</goal>
 						</goals>
@@ -90,6 +90,9 @@
 						</goals>
 						<configuration>
 							<release>9</release>
+                            <compilerArguments>
+                                <cp>${project.basedir}/target/classes</cp>
+                            </compilerArguments>
 							<compileSourceRoots>
 								<compileSourceRoot>${project.basedir}/src/main/java9</compileSourceRoot>
 							</compileSourceRoots>

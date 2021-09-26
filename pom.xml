@@ -104,6 +104,26 @@
 				</plugins>
 			</build>
 		</profile>
+		
+		
+        <profile>
+            <activation>
+                <jdk>[9,)</jdk>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-javadoc-plugin</artifactId>
+                            <configuration>
+                                <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
 	</profiles>
 
 	<build>
